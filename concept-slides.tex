@@ -1,0 +1,117 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+\title{Resource Buying Games}
+\author[C. Welzel]{Christoph Welzel}
+
+\addtobeamertemplate{frametitle}{\let\insertframetitle\insertsubsectionhead}{}
+\newcommand{\ft}{\frametitle{dummy}}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+\begin{frame}
+  \begin{itemize}
+    \item Context
+      \begin{itemize}
+        \item What is modelled?
+        \item How is it modelled?
+      \end{itemize}
+    \item Example
+      \begin{itemize}
+        \item Introducing an example which is used to illustrate different
+          aspects throughout the presentation
+        \item Interleaved graphs for two players, both want to acquire a
+          spanning tree
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection{Game definition}
+\begin{frame}
+  \ft
+  \begin{itemize}
+    \item Formally define game
+    \item Refer to the example
+  \end{itemize}
+\end{frame}
+\subsection{Pure Nash equilibria}
+\begin{frame}
+  \ft
+  \begin{itemize}
+    \item Explain what PNEs are (maybe from previous presentations this
+      knowledge can be assumed)
+    \item Again the example can be used to illustrate what uniliteral change
+      might imply
+  \end{itemize}
+\end{frame}
+\subsection{Basic matroid theory}
+\begin{frame}
+  \ft
+  \begin{itemize}
+    \item Formally define matroids
+    \item Explain the meaning of the definition by using the example
+    \item Contraction and deletion (again with example)
+    \item Define Matroid games (and mention that the example fits)
+  \end{itemize}
+\end{frame}
+
+\section{Algorithm: PNE in Unweighted Matroid Games}
+\subsection{Algorithm}
+\begin{frame}
+  \ft
+  \begin{itemize}
+    \item Present algorithm
+    \item Execute one or two steps at example
+  \end{itemize}
+\end{frame}
+
+\subsection{Correctness}
+\begin{frame}
+  \ft
+  \begin{itemize}
+    \item Intuitively present the ideas for the correctness
+    \item (Formal proofs might take too long?)
+  \end{itemize}
+\end{frame}
+
+\section{Weighted Matroid Games}
+\begin{frame}
+  \begin{itemize}
+    \item Introduce socially optimal solution
+    \item Show (or at least motivate) why this is a PNE
+    \item Mention reduction to show that finding an optimal solution is NP-hard
+  \end{itemize}
+\end{frame}
+
+\section{Non-Matroid Strategy Spaces}
+\subsection{Lack of PNE}
+\begin{frame}
+  \ft
+  \begin{itemize}
+    \item Present that for Non-Matroid Games we can find strategy spaces
+      which do not allow PNE
+    \item Illustrate the construction by a picture
+  \end{itemize}
+\end{frame}
+
+\subsection{Non-Decreasing Marginal Cost Functions \& Price of Anarchy}
+\begin{frame}
+  \ft
+  \begin{itemize}
+    \item Present that games with Non-Decreasing Marginal Cost Functions allow
+      PNE (explain how the marginal cost pricing is obtained)
+    \item Define Price of Anarchy
+    \item Mention that non-increasing and non-decreasing games with weighted
+      players is unbounded
+  \end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}
+  \begin{itemize}
+    \item Sum up results
+    \item Embed results into topic
+  \end{itemize}
+\end{frame}
+
+\end{document}
