@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+  \node[node] (A) {};
+  \node[below=0.5 of A] (d1) {};
+  \node[node, below=0.5 of d1] (B) {};
+  \node[right=1 of A] (d2) {};
+  \node[node, right=1 of d2] (D) {};
+  \node[node] (C) at (d1-|d2) {};
+  \node[node] (E) at (B-|D) {};
+
+  \node[above left =0.1 and 0.1 of d1] (del1) {};
+  \node[above right=0.1 and 0.1 of d1] (del2) {};
+  \node[below left =0.1 and 0.1 of d1] (del3) {};
+  \node[below right=0.1 and 0.1 of d1] (del4) {};
+
+  \draw[edge, p1, dotted] (A) to (B);
+  \draw[edge, p1] (A) to (C);
+  \draw[edge, p1] (B) to (C);
+  \draw[edge, p1] (C) to (D);
+  \draw[edge, p1] (C) to (E);
+
+  \draw[thick, black] (del1) to (del4);
+  \draw[thick, black] (del2) to (del3);
+\end{tikzpicture}

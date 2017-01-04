@@ -6,9 +6,10 @@
 \author[C. Welzel]{Christoph Welzel}
 
 \newcommand{\tupel}[1]{\left(#1\right)}
-\newcommand{\set}[1]{\left{#1\right}}
+\newcommand{\set}[1]{\left\{#1\right\}}
 
 \begin{document}
+\input{tikz/settings}
 \maketitle
 \section{Introduction}
 \begin{frame}
@@ -123,12 +124,51 @@
             \forall &X, Y\in B:\\
             &\forall x\in (X\setminus Y)\\
             &\exists y\in (Y\setminus X):\\
-            &\;(X\setminus \{x\})\cup\{y\}\in B
+            &\;(X\setminus \set{x})\cup\{y\}\in B
           \end{align*}
         \end{center}
     \end{itemize}
     \column{0.5\textwidth}
+    \uncover<2->{Spanning trees:}
+    \begin{center}
+      \uncover<2->{\resizebox{0.8\textwidth}{!}{\input{tikz/graphp1}}\\[0.5cm]}
+      \uncover<3->{\resizebox{0.4\textwidth}{!}{\input{tikz/graphp1S1}}}
+      \uncover<4->{\resizebox{0.4\textwidth}{!}{\input{tikz/graphp1S2}}}
+      \uncover<5->{\resizebox{0.4\textwidth}{!}{\input{tikz/graphp1S3}}}
+    \end{center}
   \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Operations on Matroids $\mathcal{M} = \tupel{E, \mathcal{B}}$}
+  \begin{columns}
+    \column{0.5\textwidth}
+    \begin{center}
+      Contraction:
+    \end{center}
+    \vspace{-0.6cm}
+    \begin{align*}
+      &\mathcal{M}/e = \tupel{E\setminus\set{e}, \mathcal{B}/e}\text{ with}\\
+      &\mathcal{B}/e = \set{B\subseteq (E\setminus\set{e})\middle| B\cup\set{e}\in\mathcal{B}}
+    \end{align*}
+    \column<4->{0.5\textwidth}
+    \begin{center}
+      Deletion:
+    \end{center}
+    \vspace{-0.6cm}
+    \begin{align*}
+      &\mathcal{M}\setminus e = \tupel{E\setminus\set{e},\mathcal{B}\setminus e}\text{ with}\\
+      &\mathcal{B}\setminus e = \set{B\subseteq E\setminus\set{e}\middle|B\in\mathcal{B}}
+    \end{align*}
+  \end{columns}
+  \begin{center}
+    \begin{tikzpicture}
+      \uncover<2->{\node (G) {\input{tikz/graphp1}};
+      \node[right=1 of G] (leadsto) {\Huge$\leadsto$};}
+      \uncover<3>{\node[right=1 of leadsto] (G') {\input{tikz/graphp1Cont}};}
+      \uncover<5>{\node[right=1 of leadsto] (G'') {\input{tikz/graphp1Del}};}
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \subsection{Pure Nash equilibria}
