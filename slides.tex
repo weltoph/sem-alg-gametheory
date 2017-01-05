@@ -139,7 +139,7 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Operations on Matroids $\mathcal{M} = \tupel{E, \mathcal{B}}$}
   \begin{columns}
     \column{0.5\textwidth}
@@ -171,35 +171,40 @@
   \end{center}
 \end{frame}
 
-\subsection{Pure Nash equilibria}
 \begin{frame}
-  % \begin{itemize}
-  %   \item (1 slide)
-  %   \item Explain what PNEs are (maybe from previous presentations this
-  %     knowledge can be assumed)
-  %   \item Again the example can be used to illustrate what uniliteral change
-  %     might imply
-  % \end{itemize}
-% \end{frame}
-% \subsection{Basic matroid theory}
-% \begin{frame}
-  % \begin{itemize}
-  %   \item (2/3 slides)
-  %   \item Formally define matroids
-  %   \item Explain the meaning of the definition by using the example
-  %   \item Contraction and deletion (again with example)
-  %   \item Define Matroid games (and mention that the example fits)
-  % \end{itemize}
+  \frametitle{Cuts in Matroids}
+  \begin{columns}
+    \column{0.7\textwidth}
+    $\mathcal{M} = \tupel{E, \mathcal{B}}$
+    \begin{itemize}
+      \item \emph{Cut}: inclusion-wise minimal $C\subseteq E$ such that
+        $E\setminus C$ does not contain a basis of $\mathcal{M}$
+      \item[$\leadsto$] $\mathcal{C}\tupel{\mathcal{M}} =
+        \set{C\subseteq E\middle| C\text{ is a cut in } \mathcal{M}}$
+    \end{itemize}
+    \column{0.3\textwidth}
+    \resizebox{0.8\textwidth}{!}{\input{tikz/graphp1}}
+  \end{columns}
+  \vspace{0.7cm}
+  \begin{columns}
+    \column{0.33\textwidth}
+    \uncover<2->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut1}}\\[0.3cm]}
+    \uncover<3->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut2}}}
+    \column{0.33\textwidth}
+    \uncover<4->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut3}}}\\[0.3cm]
+    \uncover<5->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut4}}}
+    \column{0.33\textwidth}
+    \uncover<6->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut5}}}
+  \end{columns}
 \end{frame}
 
 \section{Algorithm: PNE in Unweighted Matroid Games}
 \subsection{Algorithm}
 \begin{frame}
-  % \begin{itemize}
-  %   \item Present algorithm (2 slides)
-  %   \item Execute one or two steps at example (only a slide but animation might
-  %     take some time ca. 5 minutes)
-  % \end{itemize}
+  \begin{enumerate}[(i)]
+    \item Init:
+    \item ...
+  \end{enumerate}
 \end{frame}
 
 \subsection{Correctness}
