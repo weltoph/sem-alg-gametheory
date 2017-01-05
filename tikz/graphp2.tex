@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+  \node[node] (A) {};
+  \node[right=1 of A] (d1) {};
+  \node[node, right=1 of d1] (C) {};
+  \node[above=0.5 of C] (d2) {};
+  \node[node] (B) at (d2-|d1) {};
+  \node[node, above=0.5 of d2] (D) {};
+  \node[node, above=0.2 of D] (E) {};
+
+  \draw[edge, p2] (A) to (B);
+  \draw[edge, p2] (B) to (D);
+  \draw[edge, p2] (C) to (D);
+  \draw[edge, p2] (B) to (E);
+  \draw[edge, p2, bend right] (C) to (E);
+\end{tikzpicture}

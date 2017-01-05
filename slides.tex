@@ -1,6 +1,7 @@
 \documentclass{beamer}
 \usepackage{pgfplots}
 \usepackage{tikz}
+\usepackage{csquotes}
 \usetheme{metropolis}
 \title{Resource Buying Games}
 \author[C. Welzel]{Christoph Welzel}
@@ -201,10 +202,41 @@
 \section{Algorithm: PNE in Unweighted Matroid Games}
 \subsection{Algorithm}
 \begin{frame}
-  \begin{enumerate}[(i)]
-    \item Init:
-    \item ...
-  \end{enumerate}
+  \frametitle{Algorithm}
+  \begin{tabular}{|lll|}
+    \hline
+    (i) & Init: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+        \begin{itemize}
+          \item \parbox{0.7\textwidth}{every player: empty working basis, complete ground-set, complete set of valid result bases}
+          \item every resource: cost for next load, current load
+        \end{itemize}
+      }\\\hline
+    (ii) & Find: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+        \begin{itemize}
+          \item inclusion-min (necessary cost)-max cut $C$
+          \item minimal cost resource $e$ in $C$
+          \item owner $i$ of $C$
+        \end{itemize}
+      }\\\hline
+    (iii) & Pick: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+        \begin{itemize}
+          \item $i$: add $e$ to working basis, contract matroid to $e$
+          \item $e$: update marginal cost and increase load
+          \item all player: delete elements $C\setminus\set{e}$ from matroid
+        \end{itemize}
+      }\\\hline
+    (iv) & Break: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+        \begin{itemize}
+          \item exists player with incomplete basis: goto (ii)
+          \item otherwise: return chosen bases and payments
+        \end{itemize}
+      }\\\hline
+  \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Example: Graph}
+  \resizebox{\textwidth}{!}{\input{tikz/graphp2}}
 \end{frame}
 
 \subsection{Correctness}
