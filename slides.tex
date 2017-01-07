@@ -2,6 +2,7 @@
 \usepackage{pgfplots}
 \usepackage{tikz}
 \usepackage{csquotes}
+\usepackage{cancel}
 \usetheme{metropolis}
 \title{Resource Buying Games}
 \author[C. Welzel]{Christoph Welzel}
@@ -14,20 +15,6 @@
 \maketitle
 \section{Introduction}
 \begin{frame}
-  % \begin{itemize}
-  %   \item Context (1 slide)
-  %     \begin{itemize}
-  %       \item What is modelled?
-  %       \item How is it modelled?
-  %     \end{itemize}
-  %   \item Example (1 slide)
-  %     \begin{itemize}
-  %       \item Introducing an example which is used to illustrate different
-  %         aspects throughout the presentation
-  %       \item Interleaved graphs for two players, both want to acquire a
-  %         spanning tree
-  %     \end{itemize}
-  % \end{itemize}
 \end{frame}
 
 \subsection{Game definition}
@@ -236,15 +223,94 @@
 
 \begin{frame}
   \frametitle{Example: Graph}
-  \resizebox{\textwidth}{!}{\input{tikz/graphp2}}
+  \begin{columns}
+    \column{0.5\textwidth}
+    Player 1:\\
+    \vspace{-0.2cm}
+    \begin{center}
+      \resizebox{0.6\textwidth}{!}{\input{tikz/graphp1labeled}}
+    \end{center}
+    \column{0.5\textwidth}
+    Player 2:\\
+    \vspace{-0.5cm}
+    \begin{center}
+      \resizebox{0.6\textwidth}{!}{\input{tikz/graphp2labeled}}
+    \end{center}
+  \end{columns}
+  \begin{center}
+    \resizebox{0.35\textwidth}{!}{\input{tikz/graphboth}}
+  \end{center}
 \end{frame}
 
-\subsection{Correctness}
+\newlength{\cutscaling}
+\setlength{\cutscaling}{0.17\textwidth}
 \begin{frame}
-  % \begin{itemize}
-  %   \item Intuitively present the ideas for the correctness (1/2 slides)
-  %   \item (Formal proofs might take too long?)
-  % \end{itemize}
+  \frametitle{Example: Algorithm}
+  \begin{columns}
+    % left column:
+    \column{0.3\textwidth}
+    \resizebox{\textwidth}{!}{\alt<1-6>{\input{tikz/graphp1}}{\alt<7>{\input{tikz/graphp1Cont}}{\input{tikz/graphp1ContDel}}}}
+    \begin{columns}
+      \column{0.5\textwidth}
+      \resizebox{\cutscaling}{!}{\alt<1-2>{\input{tikz/graphp1Cut1}}{\input{tikz/graphp1Cut1value}}}
+      \resizebox{\cutscaling}{!}{\alt<1-3>{\input{tikz/graphp1Cut2}}{\input{tikz/graphp1Cut2value}}}
+      \resizebox{\cutscaling}{!}{\alt<1-3>{\input{tikz/graphp1Cut3}}{\input{tikz/graphp1Cut3value}}}
+      \column{0.5\textwidth}
+      \resizebox{\cutscaling}{!}{\alt<1-3>{\input{tikz/graphp1Cut4}}{\input{tikz/graphp1Cut4value}}}
+      \resizebox{\cutscaling}{!}{\alt<1-3>{\input{tikz/graphp1Cut5}}{\input{tikz/graphp1Cut5value}}}
+    \end{columns}
+
+    % middle column:
+    \column{0.4\textwidth}
+    \resizebox{\textwidth}{!}{\alt<1-8>{\input{tikz/graphbothCosts}}{\input{tikz/graphbothCostsUpd}}}
+    \begin{center}
+      \uncover<5->{\alt<5>{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut3}}}{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut3marked}}}}
+    \end{center}
+
+    % right column:
+    \column{0.3\textwidth}
+    \resizebox{\textwidth}{!}{\alt<1-7>{\input{tikz/graphp2}}{\input{tikz/graphp2Del}}}
+    \begin{columns}
+      \column{0.5\textwidth}
+      \resizebox{\cutscaling}{!}{\alt<1-3>{\input{tikz/graphp2Cut1}}{\input{tikz/graphp2Cut1value}}}
+      \resizebox{\cutscaling}{!}{\alt<1-3>{\input{tikz/graphp2Cut2}}{\input{tikz/graphp2Cut2value}}}
+      \resizebox{\cutscaling}{!}{\alt<1>{\input{tikz/graphp2Cut3}}{\input{tikz/graphp2Cut3deleted}}}
+      \column{0.5\textwidth}
+      \resizebox{\cutscaling}{!}{\alt<1>{\input{tikz/graphp2Cut4}}{\input{tikz/graphp2Cut4deleted}}}
+      \resizebox{\cutscaling}{!}{\alt<1>{\input{tikz/graphp2Cut5}}{\input{tikz/graphp2Cut5deleted}}}
+      \resizebox{\cutscaling}{!}{\alt<1-3>{\input{tikz/graphp2Cut6}}{\input{tikz/graphp2Cut6value}}}
+    \end{columns}
+  \end{columns}
+  \uncover<9>{ }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Soundness}
+  \begin{itemize}
+    \item Termination:
+      \begin{itemize}
+        \item inductively applying contraction operations lead to basis
+        \item deletion cannot \enquote{loose} bases for other players since
+          chosen cut is inclusion-wise minimal
+      \end{itemize}
+    \item Correctness
+      \begin{itemize}
+        \item Lemma: cost of the chosen element decreases monotonically in each
+          iteration
+        \item assume there is a beneficial alternative basis
+          $\hat{B} = (B_{i}\setminus\set{g})\cup{f}$
+          \begin{itemize}
+            \item consider iteration $k$ in which $g$ is added to basis of $i$:
+            \item if $f$ is in the corresonponding cut its cost never changes
+              since it is deleted from every matroid $rightarrow$ $f$ is not in
+              the cut
+            \item but $f$ and $g$ \enquote{open} same dimensionality, thus $f$
+              is not left in contracted matroid of $i$
+            \item $f$ was deleted before (in this iteration the cost of the
+              chosen element was lower than for $f$ in contradiction to lemma)
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \section{Weighted Matroid Games}
@@ -253,7 +319,8 @@
   %   \item (2 slides)
   %   \item Introduce socially optimal solution
   %   \item Show (or at least motivate) why this is a PNE
-  %   \item Mention reduction to show that finding an optimal solution is NP-hard
+  %   \item Mention reduction to show that finding an optimal solution is
+  %     NP-hard
   % \end{itemize}
 \end{frame}
 

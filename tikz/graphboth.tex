@@ -6,12 +6,13 @@
   \node[node, right=1 of d2] (D) {};
   \node[node] (C) at (d1-|d2) {};
   \node[node] (E) at (B-|D) {};
-  
-  \node[fit=(A) (B), draw, rectangle, rounded corners, black] (new) {};
+  \node[node, above=0.5 of d2] (F) {};
 
-  \draw[edge, p1, bend right] (C) to (new.east);
-  \draw[edge, p1, bend left] (C) to (new.east);
   \draw[edge, p1] (A) to (B);
-  \draw[edge, p1] (C) to (D);
+  \draw[edge, both] (A) to (C);
+  \draw[edge, p1] (B) to (C);
+  \draw[edge, both] (C) to (D);
   \draw[edge, p1] (C) to (E);
+  \draw[edge, p2] (A) to (F);
+  \draw[edge, p2] (D) to (F);
 \end{tikzpicture}

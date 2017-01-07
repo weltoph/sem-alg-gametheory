@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+  \node[node] (A) {};
+  \node[below=0.5 of A] (d1) {};
+  \node[node, below=0.5 of d1] (B) {};
+  \node[right=1 of A] (d2) {};
+  \node[node, right=1 of d2] (D) {};
+  \node[node] (C) at (d1-|d2) {};
+  \node[node] (E) at (B-|D) {};
+  \node[node, above=0.5 of d2] (F) {};
+
+  \draw[edge, p1] (A) to node[right, black] {\tiny$7$} (B);
+  \draw[edge, both] (A) to node[above, black] {\tiny$8$} (C);
+  \draw[edge, p1] (B) to node[below, black] {\tiny$2$} (C);
+  \draw[edge, both] (C) to node[above, black] {\tiny$3$} (D);
+  \draw[edge, p1] (C) to node[below, black] {\tiny$6$} (E);
+  \draw[edge, p2] (A) to node[above, black] {\tiny$5$} (F);
+  \draw[edge, p2] (D) to node[above, black] {\tiny$2$} (F);
+\end{tikzpicture}

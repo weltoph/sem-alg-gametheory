@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+  \node[node] (A) {};
+  \node[below=0.5 of A] (d1) {};
+  \node[right=1 of A] (d2) {};
+  \node[node, right=1 of d2] (D) {};
+  \node[node] (C) at (d1-|d2) {};
+  \node[node, above=0.5 of d2] (F) {};
+
+  \node[above left=0.25 and 0.25 of d2] (cross1) {};
+  \node[above right=0.25 and 0.25 of d2] (cross2) {};
+  \node[below right=0.25 and 0.25 of d2] (cross3) {};
+  \node[below left=0.25 and 0.25 of d2] (cross4) {};
+
+  \draw[very thick, red] (cross1) to (cross3);
+  \draw[very thick, red] (cross2) to (cross4);
+
+  \draw[edge, p2] (A) to (C);
+  \draw[edge, p2] (C) to (D);
+  \draw[edge, p2, dotted] (A) to (F);
+  \draw[edge, p2, dotted] (D) to (F);
+\end{tikzpicture}

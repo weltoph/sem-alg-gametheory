@@ -1,9 +1,9 @@
 \begin{tikzpicture}
-  \node[node] (A) {};
+  \node[node, label=$A$] (A) {};
   \node[below=0.5 of A] (d1) {};
   \node[right=1 of A] (d2) {};
-  \node[node, right=1 of d2] (D) {};
-  \node[node] (C) at (d1-|d2) {};
+  \node[node, right=1 of d2, label=$D$] (D) {};
+  \node[node, label=$C$] (C) at (d1-|d2) {};
   \node[node, above=0.5 of d2] (F) {};
 
   \draw[edge, p2] (A) to (C);

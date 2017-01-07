@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+  \begin{scope}[on background layer]
+    \node[node] (A) {};
+    \node[below=0.5 of A] (d1) {};
+    \node[node, below=0.5 of d1] (B) {};
+    \node[right=1 of A] (d2) {};
+    \node[node, right=1 of d2] (D) {};
+    \node[node] (C) at (d1-|d2) {};
+    \node[node] (E) at (B-|D) {};
+
+
+    \draw[edge, p1, dotted] (A) to (B);
+    \draw[edge, p1, dotted] (A) to (C);
+    \draw[edge, p1, dotted] (B) to (C);
+    \draw[edge, p1, dotted] (C) to (D);
+    \draw[edge, p1] (C) to (E);
+  \end{scope}
+  \node[fill=green!25, circle, draw, text=black, inner sep=2pt] (value) at (d1-|d2) {\huge$6$};
+\end{tikzpicture}
