@@ -10,6 +10,8 @@
 \newcommand{\tupel}[1]{\left(#1\right)}
 \newcommand{\set}[1]{\left\{#1\right\}}
 
+\DeclareMathOperator{\ex}{ex}
+
 \begin{document}
 \input{tikz/settings}
 \maketitle
@@ -302,8 +304,8 @@
           \begin{itemize}
             \item consider iteration $k$ in which $g$ is added to basis of $i$:
             \item if $f$ is in the corresonponding cut its cost never changes
-              since it is deleted from every matroid $rightarrow$ $f$ is not in
-              the cut
+              since it is deleted from every matroid $\rightarrow$ $f$ is not
+              in the cut
             \item but $f$ and $g$ \enquote{open} same dimensionality, thus $f$
               is not left in contracted matroid of $i$
             \item $f$ was deleted before (in this iteration the cost of the
@@ -315,45 +317,106 @@
 
 \section{Weighted Matroid Games}
 \begin{frame}
-  % \begin{itemize}
-  %   \item (2 slides)
-  %   \item Introduce socially optimal solution
-  %   \item Show (or at least motivate) why this is a PNE
-  %   \item Mention reduction to show that finding an optimal solution is
-  %     NP-hard
-  % \end{itemize}
+  \frametitle{Recall: Congestion Model}
+  \begin{equation*}
+    \mathcal{M} = \tupel{N, E, \mathcal{B}, \left(d_{i}\right)_{i\in N},
+    \left(c_{e}\right)_{e\in E}}
+  \end{equation*}
+  \vspace{-1cm}
+  \begin{itemize}
+    \item before: $d_{i} = 1$ for all $i$
+    \item now: $d_{i}\in\mathbb{N}_{>0}$ 
+    \item auxiliary definitions:
+      \begin{itemize}
+        \item $N_{e}\tupel{B} = \set{i\in N\middle|e\in B_{i}}$
+        \item for a fixed $B$: $\ex_{i}\tupel{e} =
+          \set{f\in E\setminus\set{e}\middle|
+          (B_{i}\setminus{e})\cup\set{f}\in\mathcal{B}_{i}}$: set of resources
+          that can replace $e$ for player $i$
+        \item $F = \bigcup_{i\in N}\bigcap_{B\in \mathcal{B}_{i}} B$:
+          set of obligatory elements for at least one player
+        \item $\Delta_{i}\tupel{B;e\rightarrow f} =
+          c_{f}\tupel{\ell_{f}\tupel{B_{i}\cup\set{f}\setminus\set{e}}} -
+          c_{f}\tupel{\ell_{f}\tupel{B}}$: marginal cost to buy resource $f$ if
+          $i$ switches
+        \item $\Delta_{i}^{e} = \min_{f\in\ex_{i}(e)}\set{\Delta_{i}(B;e\rightarrow f)}$:
+          minimal marginal cost for exchanging $e$
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Characterisation of Pure Nash Equilibria}
+  \begin{theorem}
+    For a weighted matroid resource buying game
+    $\tupel{N, E, \mathcal{B}, d, c}$ and $B\in\mathcal{B}$ the following
+    holds: there is a payment vector $p$ such that $\tupel{B,p}$ is a
+    PNE if and only if
+    \begin{equation*}
+      c_{e}(B) \leq \sum_{i\in N_{e}(B)}\Delta_{i}^{e}(B)
+      \textit{ for all }e\in E\setminus F
+    \end{equation*}
+  \end{theorem}
+  \begin{proof}
+    if: $p_{i}^{e} =
+      \begin{cases}
+        \frac{\Delta_{i}^{e}(B)}{\sum_{j\in N_{e}(B)}\Delta_{j}^{e}(B)}\cdot
+        c_{e}(B)&\text{ if } \sum_{j\in N_{e}(B)}\Delta_{j}^{e}(B) > 0\\
+        0 &\text{ otherwise}
+      \end{cases}$\\
+      for all $e\in E\setminus F$ and $i\in N_{e}(B)$\\
+    only if: for all $i$ and $e$: $p_{i}^{e} \leq \Delta_{i}^{e}(B)$
+      and $c_{e}(B) = \sum_{i\in N_{e}(B)}p_{i}^{e}$
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Existence of Pure Nash Equilibria}
+  \begin{theorem}
+    Every weighted matroid resource buying game with marginally non-increasing
+    cost functions possesses a pure Nash equilibria.
+  \end{theorem}
+  \begin{itemize}
+    \item socially optimal configuration profile: $B\in\mathcal{B}$ such that
+      $\sum_{e\in E}c_{e}(\ell_{e}(B))$ is minimal
+    \item for socially optimal configuration profile $B$ holds:
+      \begin{equation*}
+        c_{e}(B)\leq \sum_{i\in N_{e}(B)}\Delta_{i}^{e}(B)
+        \text{ for all }e\in E\setminus F
+      \end{equation*}
+    \item $B$ is a pure Nash equilibrium
+    \item (but finding socially optimal configuration profiles is NP-hard)
+  \end{itemize}
 \end{frame}
 
 \section{Non-Matroid Strategy Spaces}
-\subsection{Lack of PNE}
 \begin{frame}
-  % \begin{itemize}
-  %   \item (1 slide)
-  %   \item Present that for Non-Matroid Games we can find strategy spaces
-  %     which do not allow PNE
-  %   \item Illustrate the construction by a picture
-  % \end{itemize}
+\frametitle{Consequences of using Non-Matroid Strategy Spaces}
+  \begin{lemma}
+    If $\mathcal{S}\subseteq 2^{E}$ is a non-matroid anti-chain, then there
+    exist $X,Y\in\mathcal{S}$ and $\set{a,b,c}\subseteq X\cup Y$ such that each
+    set $Z\in\mathcal{S}$ with $Z\subseteq(X\cup Y)\setminus\set{a}$ contains
+    $b$ and $c$. (Especially, there is $S\in\mathcal{S}$ with
+    $S\subseteq X\cup Y$ and $a\in S$ but $b,c\notin S$.)
+  \end{lemma}
+  \begin{theorem}
+    For every non-matroid anti-chain $\mathcal{S}$ on a set of resource $E$,
+    there exists a weighted two-player resource buying game
+    $G = \tupel{\tilde{E}, \tupel{\mathcal{S}_{1} \times
+    \mathcal{S}_{2}}\times \mathcal{P}, \pi}$ having marginally non-increasing
+    cost functions, whose strategy spaces $\mathcal{S}_{1}$ and
+    $\mathcal{S}_{2}$ are both isomophic to $\mathcal{S}$, so that $G$ does not
+    possess a pure Nash equilibrium.
+  \end{theorem}
 \end{frame}
 
-\subsection{Non-Decreasing Marginal Cost Functions \& Price of Anarchy}
 \begin{frame}
-  % \begin{itemize}
-  %   \item (3 slides)
-  %   \item Present that games with Non-Decreasing Marginal Cost Functions allow
-  %     PNE (explain how the marginal cost pricing is obtained)
-  %   \item Define Price of Anarchy
-  %   \item Mention that non-increasing and non-decreasing games with weighted
-  %     players is unbounded
-  % \end{itemize}
+  \frametitle{Construction of games without PNE}
+
 \end{frame}
 
 \section{Conclusion}
 \begin{frame}
-  % \begin{itemize}
-  %   \item (1 slide)
-  %   \item Sum up results
-  %   \item Embed results into topic
-  % \end{itemize}
 \end{frame}
 
 \end{document}
