@@ -1,36 +1,51 @@
 \begin{tikzpicture}
-  \node[label=above left:{$d_{1}=5$}] (left) {$X_{1}\cup Y_{1}$};
-  \node[right=of left] (shared) {
+  \node (shared) {
     $\begin{aligned}
-      x = a_{1} = b_{2}\\
-      y = b_{1} = a_{2}\\
-      z = c_{1} = c_{2}
+      a_1 = x = b_2\\
+      b_1 = y = a_2\\
+      c_1 = z = c_2
     \end{aligned}$
-    };
-  \node[right=of shared, label=above right:{$d_{2}=4$}] (right) {$X_{2}\cup Y_{2}$};
-  \node[above=0.1 of shared] (costs) {
-    $c_{x}(t) = t, c_{y}(t) = 5\tfrac{1}{2}, c_{z}(t) = 4$};
-  \node[left=of left, label=below:{$c_{e}(t)=M$}] (restleft) {$E\setminus(X_{1}\cup Y_{1})$};
-  \node[right=of right, label=below:{$c_{e}(t)=M$}] (restright) {$E\setminus(X_{2}\cup Y_{2})$};
+  };
 
-  \draw[p1] (left.north west) to (shared.north west);
-  \draw[p1] (left.south west) to (shared.south west);
+  \node (p3) at (shared.south east) {};
+  \node[above=3 of p3] (p2) {};
+  \node[left=4.5 of p3] (m2) {};
+  \node[left=1 of m2] (p4) {};
+  \node (m1) at (p2-|m2) {};
+  \node (p1) at (m1-|p4) {};
+  \node [left=0.4 of shared.north west] (text1) {$X_{1}\cup Y_{1}$};
+  \fill[gray!50] (p1.center) -- (m1.center) -- (m2.center) -- (p4.center) -- cycle;
+  \node [below left=0.5 and 0.5 of p4] (mark1) {$M$};
+  \node [below=0.5 of m2] (mark3) {$0$};
+  
+  \node (p5) at (shared.north west) {};
+  \node[right=4.5 of p5] (m3) {};
+  \node[right=1 of m3] (p6) {};
+  \node[below=3 of p5] (p8) {};
+  \node (m4) at (p8-|m3) {};
+  \node (p7) at (m4-|p6) {};
+  \node [right=0.4 of shared.south east] (text2) {$X_{2}\cup Y_{2}$};
+  \fill[gray!50] (p6.center) -- (m3.center) -- (m4.center) -- (p7.center) -- cycle;
+  \node [above right=0.5 and 0.5 of p6] (mark2) {$M$};
+  \node [above=0.5 of m3] (mark4) {$0$};
 
-  \draw[p2] (right.north east) to (shared.north east);
-  \draw[p2] (right.south east) to (shared.south east);
+  \draw[p1] (p1.center) to (m1.center);
+  \draw[p1] (m1.center) to (p2.center);
+  \draw[p1] (p2.center) to (p3.center);
+  \draw[p1] (p3.center) to (m2.center);
+  \draw[p1] (m2.center) to (p4.center);
+  \draw[p1] (p4.center) to (p1.center);
+  \draw[dashed, p1] (m1.center) to (m2.center);
+  \draw (mark1) to (p4.north east);
+  \draw (mark3) to (text1.south);
 
-  \draw[both] (shared.north east) to (shared.north west);
-  \draw[both] (shared.south east) to (shared.south west);
-  \draw[p1,dashed] (shared.north east) to (shared.south east);
-  \draw[p2,dashed] (shared.north west) to (shared.south west);
-
-  \draw[p1!50] (left.north west) to (restleft.north west);
-  \draw[p1!50] (restleft.north west) to (restleft.south west);
-  \draw[p1!50] (restleft.south west) to (left.south west);
-  \draw[p1!50, dashed] (left.north west) to (left.south west);
-
-  \draw[p2!50] (right.north east) to (restright.north east);
-  \draw[p2!50] (restright.north east) to (restright.south east);
-  \draw[p2!50] (restright.south east) to (right.south east);
-  \draw[p2!50, dashed] (right.north east) to (right.south east);
+  \draw[p2] (p5.center) to (m3.center);
+  \draw[p2] (m3.center) to (p6.center);
+  \draw[p2] (p6.center) to (p7.center);
+  \draw[p2] (p7.center) to (m4.center);
+  \draw[p2] (m4.center) to (p8.center);
+  \draw[p2] (p8.center) to (p5.center);
+  \draw[dashed, p2] (m3.center) to (m4.center);
+  \draw (mark2) to (p6.south west);
+  \draw (mark4) to (text2.north);
 \end{tikzpicture}
