@@ -4,6 +4,7 @@
 \usepackage{csquotes}
 \usepackage{cancel}
 \usepackage{stmaryrd}
+\usepackage{url}
 \usetheme{metropolis}
 \title{Resource Buying Games}
 \author[C. Welzel]{Christoph Welzel}
@@ -19,6 +20,20 @@
 
 \begin{frame}
   \frametitle{Introduction}
+    \begin{itemize}
+      \item Resources: Nodes/edges in a graph, Machines to schedule jobs on,
+        \dots
+      \item Players: jointly buy resources to meet individual
+        (potentially overlapping) demands
+      \item<2-> Every player contributes to buy certain resources
+      \item<3-> Payoff for a player depends on what she payed to meet her demands
+        of resources
+    \end{itemize}
+    \uncover<4->{\begin{definition}[Pure Nash Equilibrium(informal)]
+      A \emph{Pure Nash Equilibrium (PNE)} is given if for every player holds
+      that, given all other players stick to their strategies, she cannot alter
+      her behaviour to achieve a better payoff for herself.
+    \end{definition}}
 \end{frame}
 
 \section{Basic Definitions}
@@ -31,16 +46,16 @@
   \vspace{-1cm}
   \begin{itemize}
     \item $N$: set of players
-    \item $E$: set of resources
-    \item $\mathcal{S} = \times_{i\in N}\mathcal{S}_{i}$ with $\mathcal{S}_{i}$
+    \item<2-> $E$: set of resources
+    \item<3-> $\mathcal{S} = \times_{i\in N}\mathcal{S}_{i}$ with $\mathcal{S}_{i}$
       set of desired resources $S_{i}\subseteq E$: set of configurations
-    \item $d_{i}$: demand of player $i$ for her resource
+    \item<4-> $d_{i}$: demand of player $i$ for her resource
       \begin{itemize}
-        \item $d_{i} = 1$ for an unweighted game
-        \item $\ell_{e}(S) = \sum_{i\in N:e\in S_{i}}d_{i}$: load of $e$
+        \item<4-> $d_{i} = 1$ for an unweighted game
+        \item<4-> $\ell_{e}(S) = \sum_{i\in N:e\in S_{i}}d_{i}$: load of $e$
           in configuration $S\in\mathcal{S}$
       \end{itemize}
-    \item $c_{e}:\mathbb{N}\rightarrow\mathbb{N}$ with
+    \item<5-> $c_{e}:\mathbb{N}\rightarrow\mathbb{N}$ with
       $c_{e}(S) = c_{e}(\ell_{e}(S))$: cost for the resource $e$ under the load
       of $S$
   \end{itemize}
@@ -57,11 +72,11 @@
   \end{equation*}
   \vspace{-1cm}
   \begin{itemize}
-    \item $\mathcal{P}=\times_{i\in N} P_{i}$ with
+    \item<2-> $\mathcal{P}=\times_{i\in N} P_{i}$ with
       $P_{i} = \mathbb{R}^{|E|}_{+}$: payment of player $i$
-    \item $e\in E$ is bought under $S\in \mathcal{S}$ if
+    \item<3-> $e\in E$ is bought under $S\in \mathcal{S}$ if
       $\sum_{i\in N}p_{i}^{e} \geq c_{e}(S)$
-    \item $\pi_{i}(S) =
+    \item<4-> $\pi_{i}(S) =
       \begin{cases}
         \sum_{e\in E}p_{i}^{e} &\textit{if }S_{i}\textit{ is bought}\\
         \infty &\textit{otherwise}
@@ -73,7 +88,7 @@
   \frametitle{A few simplifications}
   \begin{itemize}
     \item \emph{unweighted} games
-    \item marginally non-increasing cost-function $c_{e}$:
+    \item<2-> marginally non-increasing cost-function $c_{e}$:
       \begin{equation*}
         c_{e}(x + \delta) - c_{e}(x) \geq c_{e}(y + \delta) - c_{e}(y)
         \;\;x\leq y, \delta \in \mathbb{N}
@@ -93,7 +108,7 @@
           \end{axis}
         \end{tikzpicture}
       \end{center}
-    \item restrict players demands to a specific mathematical structure:
+    \item<3-> restrict players demands to a specific mathematical structure:
       Matroids
   \end{itemize}
 \end{frame}
@@ -132,6 +147,33 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Cuts in Matroids}
+  \begin{columns}
+    \column{0.7\textwidth}
+    $\mathcal{M} = \tupel{E, \mathcal{B}}$
+    \begin{itemize}
+      \item \emph{Cut}: inclusion-wise minimal $C\subseteq E$ such that
+        $E\setminus C$ does not contain a basis of $\mathcal{M}$
+      \item[$\leadsto$] $\mathcal{C}\tupel{\mathcal{M}} =
+        \set{C\subseteq E\middle| C\text{ is a cut in } \mathcal{M}}$
+    \end{itemize}
+    \column{0.3\textwidth}
+    \resizebox{0.8\textwidth}{!}{\input{tikz/graphp1}}
+  \end{columns}
+  \vspace{0.7cm}
+  \begin{columns}
+    \column{0.33\textwidth}
+    \uncover<2->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut1}}\\[0.3cm]}
+    \uncover<3->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut2}}}
+    \column{0.33\textwidth}
+    \uncover<4->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut3}}}\\[0.3cm]
+    \uncover<5->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut4}}}
+    \column{0.33\textwidth}
+    \uncover<6->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut5}}}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
   \frametitle{Operations on Matroids $\mathcal{M} = \tupel{E, \mathcal{B}}$}
   \begin{columns}
     \column{0.5\textwidth}
@@ -161,33 +203,6 @@
       \uncover<5>{\node[right=1 of leadsto] (G'') {\input{tikz/graphp1Del}};}
     \end{tikzpicture}
   \end{center}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Cuts in Matroids}
-  \begin{columns}
-    \column{0.7\textwidth}
-    $\mathcal{M} = \tupel{E, \mathcal{B}}$
-    \begin{itemize}
-      \item \emph{Cut}: inclusion-wise minimal $C\subseteq E$ such that
-        $E\setminus C$ does not contain a basis of $\mathcal{M}$
-      \item[$\leadsto$] $\mathcal{C}\tupel{\mathcal{M}} =
-        \set{C\subseteq E\middle| C\text{ is a cut in } \mathcal{M}}$
-    \end{itemize}
-    \column{0.3\textwidth}
-    \resizebox{0.8\textwidth}{!}{\input{tikz/graphp1}}
-  \end{columns}
-  \vspace{0.7cm}
-  \begin{columns}
-    \column{0.33\textwidth}
-    \uncover<2->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut1}}\\[0.3cm]}
-    \uncover<3->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut2}}}
-    \column{0.33\textwidth}
-    \uncover<4->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut3}}}\\[0.3cm]
-    \uncover<5->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut4}}}
-    \column{0.33\textwidth}
-    \uncover<6->{\resizebox{0.7\textwidth}{!}{\input{tikz/graphp1Cut5}}}
-  \end{columns}
 \end{frame}
 
 \section{Algorithm: PNE in Unweighted Matroid Games}
@@ -293,24 +308,24 @@
   \begin{itemize}
     \item Termination:
       \begin{itemize}
-        \item inductively applying contraction operations lead to basis
-        \item deletion cannot \enquote{loose} bases for other players since
+        \item<2-> inductively applying contraction operations lead to basis
+        \item<3-> deletion cannot \enquote{loose} bases for other players since
           chosen cut is inclusion-wise minimal
       \end{itemize}
     \item Correctness
       \begin{itemize}
-        \item Lemma: cost of the chosen element decreases monotonically in each
+        \item<4-> Lemma: cost of the chosen element decreases monotonically in each
           iteration
-        \item assume there is a beneficial alternative basis
+        \item<5-> assume there is a beneficial alternative basis
           $\hat{B} = (B_{i}\setminus\set{g})\cup{f}$
           \begin{itemize}
-            \item consider iteration $k$ in which $g$ is added to basis of $i$:
-            \item if $f$ is in the corresonponding cut its cost never changes
+            \item<6-> consider iteration $k$ in which $g$ is added to basis of $i$:
+            \item<7-> if $f$ is in the corresonponding cut its cost never changes
               since it is deleted from every matroid $\rightarrow$ $f$ is not
               in the cut
-            \item but $f$ and $g$ \enquote{open} same dimensionality, thus $f$
+            \item<8-> but $f$ and $g$ \enquote{open} same dimensionality, thus $f$
               is not left in contracted matroid of $i$
-            \item $f$ was deleted before (in this iteration the cost of the
+            \item<9-> $f$ was deleted before (in this iteration the cost of the
               chosen element was lower than for $f$ in contradiction to lemma)
           \end{itemize}
       \end{itemize}
@@ -327,21 +342,21 @@
   \vspace{-1cm}
   \begin{itemize}
     \item before: $d_{i} = 1$ for all $i$
-    \item now: $d_{i}\in\mathbb{N}_{>0}$ 
-    \item auxiliary definitions:
+    \item<2-> now: $d_{i}\in\mathbb{N}_{>0}$ 
+    \item<3-> auxiliary definitions:
       \begin{itemize}
-        \item $N_{e}\tupel{B} = \set{i\in N\middle|e\in B_{i}}$
-        \item for a fixed $B$: $\ex_{i}\tupel{e} =
+        \item<4-> $N_{e}\tupel{B} = \set{i\in N\middle|e\in B_{i}}$
+        \item<5-> for a fixed $B$: $\ex_{i}\tupel{e} =
           \set{f\in E\setminus\set{e}\middle|
           (B_{i}\setminus{e})\cup\set{f}\in\mathcal{B}_{i}}$: set of resources
           that can replace $e$ for player $i$
-        \item $F = \bigcup_{i\in N}\bigcap_{B\in \mathcal{B}_{i}} B$:
+        \item<6-> $F = \bigcup_{i\in N}\bigcap_{B\in \mathcal{B}_{i}} B$:
           set of obligatory elements for at least one player
-        \item $\Delta_{i}\tupel{B;e\rightarrow f} =
+        \item<7-> $\Delta_{i}\tupel{B;e\rightarrow f} =
           c_{f}\tupel{\ell_{f}\tupel{B_{i}\cup\set{f}\setminus\set{e}}} -
           c_{f}\tupel{\ell_{f}\tupel{B}}$: marginal cost to buy resource $f$ if
           $i$ switches
-        \item $\Delta_{i}^{e} = \min_{f\in\ex_{i}(e)}\set{\Delta_{i}(B;e\rightarrow f)}$:
+        \item<8-> $\Delta_{i}^{e} = \min_{f\in\ex_{i}(e)}\set{\Delta_{i}(B;e\rightarrow f)}$:
           minimal marginal cost for exchanging $e$
       \end{itemize}
   \end{itemize}
@@ -360,15 +375,15 @@
     \end{equation*}
   \end{theorem}
   \begin{proof}
-    if: $p_{i}^{e} =
+    if: \uncover<2->{$p_{i}^{e} =
       \begin{cases}
         \frac{\Delta_{i}^{e}(B)}{\sum_{j\in N_{e}(B)}\Delta_{j}^{e}(B)}\cdot
         c_{e}(B)&\text{ if } \sum_{j\in N_{e}(B)}\Delta_{j}^{e}(B) > 0\\
         0 &\text{ otherwise}
       \end{cases}$\\
-      for all $e\in E\setminus F$ and $i\in N_{e}(B)$\\
-    only if: for all $i$ and $e$: $p_{i}^{e} \leq \Delta_{i}^{e}(B)$
-      and $c_{e}(B) = \sum_{i\in N_{e}(B)}p_{i}^{e}$
+      for all $e\in E\setminus F$ and $i\in N_{e}(B)$\\}
+    only if: \uncover<3->{for all $i$ and $e$: $p_{i}^{e} \leq \Delta_{i}^{e}(B)$
+      and $c_{e}(B) = \sum_{i\in N_{e}(B)}p_{i}^{e}$}
   \end{proof}
 \end{frame}
 
@@ -379,15 +394,15 @@
     cost functions possesses a PNE.
   \end{theorem}
   \begin{itemize}
-    \item socially optimal configuration profile: $B\in\mathcal{B}$ such that
+    \item<2-> socially optimal configuration profile: $B\in\mathcal{B}$ such that
       $\sum_{e\in E}c_{e}(\ell_{e}(B))$ is minimal
-    \item for socially optimal configuration profile $B$ holds:
+    \item<3-> for socially optimal configuration profile $B$ holds:
       \begin{equation*}
         c_{e}(B)\leq \sum_{i\in N_{e}(B)}\Delta_{i}^{e}(B)
         \text{ for all }e\in E\setminus F
       \end{equation*}
-    \item for $B$ exists $p$ s.t. $\tupel{B,p}$ is a PNE
-    \item (but finding socially optimal configuration profiles is NP-hard)
+    \item<4-> for $B$ exists $p$ s.t. $\tupel{B,p}$ is a PNE
+    \item<5-> (but finding socially optimal configuration profiles is NP-hard)
   \end{itemize}
 \end{frame}
 
@@ -401,7 +416,7 @@
     $b$ and $c$. (Especially, there is $S\in\mathcal{S}$ with
     $S\subseteq X\cup Y$ and $a\in S$ but $b,c\notin S$.)
   \end{lemma}
-  \begin{theorem}
+  \uncover<2->{\begin{theorem}
     For every non-matroid anti-chain $\mathcal{S}$ on a set of resource $E$,
     there exists a weighted two-player resource buying game
     $G = \tupel{\tilde{E}, \tupel{\mathcal{S}_{1} \times
@@ -409,7 +424,7 @@
     cost functions, whose strategy spaces $\mathcal{S}_{1}$ and
     $\mathcal{S}_{2}$ are both isomophic to $\mathcal{S}$, so that $G$ does not
     possess a pure Nash equilibrium.
-  \end{theorem}
+  \end{theorem}}
 \end{frame}
 
 \begin{frame}
@@ -429,12 +444,12 @@
        \end{center}
    \end{columns}
    \begin{itemize}
-     \item assume PNE $\tupel{Z^{\ast} = \tupel{Z_{1}^{\ast}, Z_{2}^{\ast}},
+     \item<2-> assume PNE $\tupel{Z^{\ast} = \tupel{Z_{1}^{\ast}, Z_{2}^{\ast}},
        p^{\ast} = \tupel{p_{1}^{\ast}, p_{2}^{\ast}}}$
-     \item $Z_{i}^{\ast}\subseteq\tupel{X_{i}\cup Y_{i}}$
-     \item $x\not\in Z_{1}^{\ast}\Rightarrow \set{y,z}\subseteq Z_{1}^{\ast}$
-     \item $y\not\in Z_{2}^{\ast}\Rightarrow \set{x,z}\subseteq Z_{2}^{\ast}$
-     \item[$\Rightarrow$] neiter $x\in Z_{1}^{\ast}$ nor $x\not\in Z_{1}^{\ast}$ $\lightning$
+     \item<3-> $Z_{i}^{\ast}\subseteq\tupel{X_{i}\cup Y_{i}}$
+     \item<4-> $x\not\in Z_{1}^{\ast}\Rightarrow \set{y,z}\subseteq Z_{1}^{\ast}$
+     \item<5-> $y\not\in Z_{2}^{\ast}\Rightarrow \set{x,z}\subseteq Z_{2}^{\ast}$
+     \item<6->[$\Rightarrow$] neiter $x\in Z_{1}^{\ast}$ nor $x\not\in Z_{1}^{\ast}$ $\lightning$
    \end{itemize}
 \end{frame}
 
@@ -478,15 +493,42 @@
         \end{tikzpicture}
       \end{center}
   \end{columns}
-  \begin{theorem}
+  \uncover<2->{\begin{theorem}
     Let $G$ be a weighted resource buying game with non-decreasing marginal
     costs and let $S^{\ast}$ be a socially optimal solution. We can compute
     (so called) marginal cost pricing vectors which induce a PNE.
-  \end{theorem}
+  \end{theorem}}
 \end{frame}
 
 \section{Conclusion}
 \begin{frame}
+  \frametitle{Results}
+  \begin{itemize}
+    \item Resource Buying Games
+    \item<2-> Matroids:
+      \parbox{6cm}{
+        \begin{itemize}
+          \item Operations: Contraction, Deletion
+          \item Cuts
+        \end{itemize}
+      }
+    \item<3-> Games:
+      \parbox{8cm}{
+        \begin{itemize}
+          \item \parbox{6cm}{
+              \begin{tabular}{|l|ll|}
+                \hline
+                Non-increasing marginal & Matroid & No Matroid\\\hline
+                unweighted & Algorithm & \\
+                weighted & PNE & No PNE\\\hline
+                Non-decreasing marginal & PNE & \\\hline
+              \end{tabular}
+            }
+        \end{itemize}
+      }
+    \item<4-> Slides: \url{github.com/weltoph/sem-alg-gametheory}
+  \end{itemize}
+  \uncover<5->{\centering Thank you for your attention!}
 \end{frame}
 
 \end{document}
