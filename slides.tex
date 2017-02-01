@@ -3,6 +3,7 @@
 \usepackage{tikz}
 \usepackage{csquotes}
 \usepackage{cancel}
+\usepackage{stmaryrd}
 \usetheme{metropolis}
 \title{Resource Buying Games}
 \author[C. Welzel]{Christoph Welzel}
@@ -15,11 +16,12 @@
 \begin{document}
 \input{tikz/settings}
 \maketitle
-\section{Introduction}
+
 \begin{frame}
+  \frametitle{Introduction}
 \end{frame}
 
-\subsection{Game definition}
+\section{Basic Definitions}
 \begin{frame}
   \frametitle{Definition: congestion model}
   \begin{equation*}
@@ -147,7 +149,7 @@
     \end{center}
     \vspace{-0.6cm}
     \begin{align*}
-      &\mathcal{M}\setminus e = \tupel{E\setminus\set{e},\mathcal{B}\setminus e}\text{ with}\\
+      &\mathcal{M}\setminus e = \tupel{E\setminus\set{e},\mathcal{B}\setminus \set{e}}\text{ with}\\
       &\mathcal{B}\setminus e = \set{B\subseteq E\setminus\set{e}\middle|B\in\mathcal{B}}
     \end{align*}
   \end{columns}
@@ -374,7 +376,7 @@
   \frametitle{Existence of Pure Nash Equilibria}
   \begin{theorem}
     Every weighted matroid resource buying game with marginally non-increasing
-    cost functions possesses a pure Nash equilibria.
+    cost functions possesses a PNE.
   \end{theorem}
   \begin{itemize}
     \item socially optimal configuration profile: $B\in\mathcal{B}$ such that
@@ -384,7 +386,7 @@
         c_{e}(B)\leq \sum_{i\in N_{e}(B)}\Delta_{i}^{e}(B)
         \text{ for all }e\in E\setminus F
       \end{equation*}
-    \item $B$ is a pure Nash equilibrium
+    \item for $B$ exists $p$ s.t. $\tupel{B,p}$ is a PNE
     \item (but finding socially optimal configuration profiles is NP-hard)
   \end{itemize}
 \end{frame}
@@ -430,9 +432,57 @@
      \item assume PNE $\tupel{Z^{\ast} = \tupel{Z_{1}^{\ast}, Z_{2}^{\ast}},
        p^{\ast} = \tupel{p_{1}^{\ast}, p_{2}^{\ast}}}$
      \item $Z_{i}^{\ast}\subseteq\tupel{X_{i}\cup Y_{i}}$
-     \item $x\not\in Z_{1}^{\ast}\Rightarrow \set{x,y}\subseteq Z_{1}^{\ast}$
+     \item $x\not\in Z_{1}^{\ast}\Rightarrow \set{y,z}\subseteq Z_{1}^{\ast}$
      \item $y\not\in Z_{2}^{\ast}\Rightarrow \set{x,z}\subseteq Z_{2}^{\ast}$
+     \item[$\Rightarrow$] neiter $x\in Z_{1}^{\ast}$ nor $x\not\in Z_{1}^{\ast}$ $\lightning$
    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Non-Decreasing Marginal Cost Functions}
+  \begin{columns}
+    \column{0.5\textwidth}
+      Non-Increasing Marginal Cost Functions:
+      \begin{center}
+        \begin{tikzpicture}
+          \begin{axis}[
+              xlabel=$x$,
+              ylabel=$c_{e}(x)$,
+              smooth,
+              width=5cm,
+              height=3cm,
+              ticks=none,
+              no markers
+            ]
+              \addplot{ln(x)};
+          \end{axis}
+        \end{tikzpicture}
+      \end{center}
+    \column{0.5\textwidth}
+      Non-Decreasing Marginal Cost Functions:
+      \begin{center}
+        \begin{tikzpicture}
+          \begin{axis}[
+              xlabel=$x$,
+              xmin=1,
+              xmax=4,
+              ylabel=$c_{e}(x)$,
+              smooth,
+              width=5cm,
+              height=3cm,
+              ticks=none,
+              no markers
+            ]
+              \addplot{5*exp(x)};
+          \end{axis}
+        \end{tikzpicture}
+      \end{center}
+  \end{columns}
+  \begin{theorem}
+    Let $G$ be a weighted resource buying game with non-decreasing marginal
+    costs and let $S^{\ast}$ be a socially optimal solution. We can compute
+    (so called) marginal cost pricing vectors which induce a PNE.
+  \end{theorem}
 \end{frame}
 
 \section{Conclusion}
