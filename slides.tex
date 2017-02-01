@@ -27,7 +27,6 @@
         (potentially overlapping) demands
       \item<2-> Every player contributes to buy certain resources
       \item<3-> Payoff for a player depends on what she payed to meet her demands
-        of resources
     \end{itemize}
     \uncover<4->{\begin{definition}[Pure Nash Equilibrium(informal)]
       A \emph{Pure Nash Equilibrium (PNE)} is given if for every player holds
@@ -38,7 +37,7 @@
 
 \section{Basic Definitions}
 \begin{frame}
-  \frametitle{Definition: congestion model}
+  \frametitle{Definition: Congestion Model}
   \begin{equation*}
     \mathcal{M} = \tupel{N, E, \mathcal{S}, \left(d_{i}\right)_{i\in N},
     \left(c_{e}\right)_{e\in E}}
@@ -62,7 +61,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Definition: weighted resource buying game}
+  \frametitle{Definition: Weighted Resource Buying Game}
   \begin{equation*}
     \mathcal{M} = \tupel{N, E, \mathcal{S}, \left(d_{i}\right)_{i\in N},
     \left(c_{e}\right)_{e\in E}}
@@ -174,7 +173,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Operations on Matroids $\mathcal{M} = \tupel{E, \mathcal{B}}$}
+  \frametitle{Operations on Matroid $\mathcal{M} = \tupel{E, \mathcal{B}}$}
   \begin{columns}
     \column{0.5\textwidth}
     \begin{center}
@@ -348,7 +347,7 @@
         \item<4-> $N_{e}\tupel{B} = \set{i\in N\middle|e\in B_{i}}$
         \item<5-> for a fixed $B$: $\ex_{i}\tupel{e} =
           \set{f\in E\setminus\set{e}\middle|
-          (B_{i}\setminus{e})\cup\set{f}\in\mathcal{B}_{i}}$: set of resources
+          (B_{i}\setminus\set{e})\cup\set{f}\in\mathcal{B}_{i}}$: set of resources
           that can replace $e$ for player $i$
         \item<6-> $F = \bigcup_{i\in N}\bigcap_{B\in \mathcal{B}_{i}} B$:
           set of obligatory elements for at least one player
