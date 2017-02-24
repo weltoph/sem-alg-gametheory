@@ -3,20 +3,80 @@
 \usepackage{tikz}
 \usepackage{csquotes}
 \usepackage{framed}
+\usepackage{todo}
 \usepackage[framed]{ntheorem}
 
 \theoremstyle{nonumberplain}
 \newframedtheorem{defi}{Definition}
 \newframedtheorem{theo}{Theorem}
 
+\newcommand{\tupel}[1]{\left(#1\right)}
+\newcommand{\set}[1]{\left\{#1\right\}}
+
 \title{Resource Buying Games}
 \author{Christoph Welzel}
 
 \begin{document}
+\input{tikz/settings}
 \maketitle
+\section{Introduction}
 
-\begin{defi}[Marginally non-increasing]
-  Whoop
+\section{Matroids}
+In this section we present the combinatorial structure of Matroids.
+\todo{why matroids?}
+
+We use matroids as a generalisation of the concept of linear independence.
+Matroids can be defined as a ground-set and the family of linear
+independent sets of this ground-set. This family has to satisfy three
+properties, i.e.
+\begin{enumerate}
+  \item the empty set is linear independent,
+  \item all subset of a linear independent set are linear independent and
+  \item for two linear independent sets we can find an element of the larger
+    set that forms a linear independent set when added to the smaller set.
+\end{enumerate}
+We use an equivalent definition of matroids which in a way captures the idea of
+having a vector space by giving instead of linear independent sets the bases of
+the ground-set.
+\begin{defi}
+  The structure $\tupel{E, \mathcal{B}}$ with $\mathcal{B}\subseteq 2^{E}$ is
+  a matroid if
+  \begin{enumerate}
+    \item $\mathcal{B}\neq\emptyset$
+    \item let $B,B'\in\mathcal{B}$ and for every $x\in B$ there is $y\in B'$
+      s. t. $(B\setminus\set{x})\cup\set{y}\in\mathcal{B}$
+  \end{enumerate}
 \end{defi}
+In analogy to vector spaces we consider every element of a basis to open access
+to a dimension. We illustrate this concept with the following example: given an
+undirected connected graph $G = \tupel{V, E}$ we will argue that
+$\tupel{E, \mathcal{S}}$ with $\mathcal{S}$ as edge-sets of spanning trees
+in $G$ forms a matroid. In order to meet the requirement that $\mathcal{S}$
+must not be empty we restrict $G$ to those graphs with at least two distinct
+vertices. Furthermore, given two spanning trees $\tupel{V, S_{1}}$ and
+$\tupel{V, S_{2}}$ of $G$ then removing an edge from $S_{1}$ yields a subgraph
+of $G$ that is separated into two connected components. Since $S_{2}$ forms a
+spanning tree as well there must be an edge connecting these components which
+can be used to again obtain a spanning tree\footnote{see Figure
+\ref{fig:spanning} for an illustration}. Consider the algorithm of Prim
+which computes spanning trees by iteratively adding edges which do not close a
+cycle: every added edge works towards a basis in $\mathcal{S}$ and opens a
+dimensionality by connecting one of the graph nodes.
+\begin{figure}
+  \begin{center}
+    \begin{tikzpicture}
+      \node (t) {\input{tikz/graphp1}};
+      \node[below left=of t] {\input{tikz/graphp1S1}};
+      \node[below =of t] {\input{tikz/graphp1S2}};
+      \node[below right=of t] {\input{tikz/graphp1S1}};
+    \end{tikzpicture}
+  \end{center}
+  \caption{Graph with its spanning trees}
+  \label{fig:spanning}
+\end{figure}
+\todo{working iteratively towards a basis by prim's algorithm as example to
+introduce cuts and contractions and deletions}
+
+\todos
 
 \end{document}
