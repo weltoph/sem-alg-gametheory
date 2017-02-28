@@ -58,10 +58,7 @@ $\tupel{V, S_{2}}$ of $G$ then removing an edge from $S_{1}$ yields a subgraph
 of $G$ that is separated into two connected components. Since $S_{2}$ forms a
 spanning tree as well there must be an edge connecting these components which
 can be used to again obtain a spanning tree\footnote{see Figure
-\ref{fig:spanning} for an illustration}. Consider the algorithm of Prim
-which computes spanning trees by iteratively adding edges which do not close a
-cycle: every added edge works towards a basis in $\mathcal{S}$ and opens a
-dimensionality by connecting one of the graph nodes.
+\ref{fig:spanning} for an illustration}.
 \begin{figure}
   \begin{center}
     \begin{tikzpicture}
@@ -76,6 +73,32 @@ dimensionality by connecting one of the graph nodes.
 \end{figure}
 \todo{working iteratively towards a basis by prim's algorithm as example to
 introduce cuts and contractions and deletions}
+Consider the algorithm of Prim which computes spanning trees by iteratively
+adding edges which do not close a cycle: every added edge works towards a basis
+in $\mathcal{S}$ and opens a dimensionality by connecting one of the graph
+nodes. When an edge is added the result of the algorithm can only compute
+certain spanning trees, namely those which contain all edges added up to this
+point. Fixing certain elements in matroids and therefore restricting the set of
+\enquote{useable} bases is captured by the \emph{contraction} operation on
+matroids.
+\begin{defi}
+  For a matroid $\mathcal{M} = \tupel{E, \mathcal{B}}$ and one $e\in E$ we call
+  the matroid $\tupel{E\setminus\set{e}, \set{B\subseteq
+  (E\setminus\set{e})\middle| B\cup\set{e}\in\mathcal{B}}}$ the
+  \emph{contraction} of $e$ in $\mathcal{M}$, denoted by $\mathcal{M}/e$.
+\end{defi}
+In a similar manner we introduce the \emph{deletion} operation on matroids to
+disregard all bases which use a certain element.
+\begin{defi}
+  For a matroid $\mathcal{M} = \tupel{E, \mathcal{B}}$ and one $e\in E$ we call
+  the matroid $\tupel{E\setminus\set{e}, \set{C\subseteq
+  (E\setminus\set{e})\middle| B\in\mathcal{B}}}$ the \emph{deletion} of $e$ in
+  $\mathcal{M}$, denoted by $\mathcal{M}\setminus e$.
+\end{defi}
+Note that this deletion operation is not necessarily well defined for all
+elements of the ground-set, e.g. deletion of an edge in the spanning tree
+matroid which is a bridge yields an empty set of bases and thus no valid
+matroid.
 
 \todos
 
