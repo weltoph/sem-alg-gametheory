@@ -68,11 +68,11 @@ can be used to again obtain a spanning tree\footnote{see Figure
       \node[below right=of t] {\input{tikz/graphp1S1}};
     \end{tikzpicture}
   \end{center}
-  \caption{Graph with its spanning trees}
+  \caption{Graph with its spanning trees.}
   \label{fig:spanning}
 \end{figure}
-\todo{working iteratively towards a basis by prim's algorithm as example to
-introduce cuts and contractions and deletions}
+\todo[done]{working iteratively towards a basis by prim's algorithm as example
+to introduce cuts and contractions and deletions}
 Consider the algorithm of Prim which computes spanning trees by iteratively
 adding edges which do not close a cycle: every added edge works towards a basis
 in $\mathcal{S}$ and opens a dimensionality by connecting one of the graph
@@ -98,7 +98,29 @@ disregard all bases which use a certain element.
 Note that this deletion operation is not necessarily well defined for all
 elements of the ground-set, e.g. deletion of an edge in the spanning tree
 matroid which is a bridge yields an empty set of bases and thus no valid
-matroid.
+matroid. Analogously, any set of edges that, when removed, disconnect the graph
+contains at least one element necessarily present in any basis. We call such
+sets cuts\footnote{see Figure \ref{fig:cuts} for an illustration} and define
+them as follows.
+\begin{defi}
+  Let $\mathcal{M} = \tupel{E, \mathcal{B}}$ be a matroid. A \emph{cut}
+  $C\subseteq E$ is an inclusion-wise minimal set s.t. $E\setminus C$ does not
+  contain any basis in $\mathcal{B}$.
+\end{defi}
+\begin{figure}
+  \begin{center}
+    \begin{tikzpicture}
+      \node (1) {\input{tikz/graphp1Cut1}};
+      \node[right=of 1] (2) {\input{tikz/graphp1Cut2}};
+      \node[right=of 2] (3) {\input{tikz/graphp1Cut3}};
+      \node[below=of 1] (4) {\input{tikz/graphp1Cut4}};
+      \node[right=of 4] (5) {\input{tikz/graphp1Cut5}};
+    \end{tikzpicture}
+  \end{center}
+  \caption{Cuts of the spanning tree matroid from the graph presented in Figure
+    \ref{fig:spanning}.}
+  \label{fig:cuts}
+\end{figure}
 
 \todos
 
