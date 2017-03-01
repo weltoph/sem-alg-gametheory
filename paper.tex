@@ -4,6 +4,7 @@
 \usepackage{csquotes}
 \usepackage{framed}
 \usepackage{todo}
+\usepackage{amsmath}
 \usepackage[framed]{ntheorem}
 
 \theoremstyle{nonumberplain}
@@ -21,6 +22,36 @@
 \maketitle
 \section{Introduction}
 
+\section{Congestion Model}
+In this section we want to introduce a structure to model resources and demands
+of actors on resources. Therefore, we consider a set of players $N$ and a set
+of resources $E$. Every player has a personal aim which can be achieved by
+different resources. This is modelled for a player $i\in N$ as family
+$\mathcal{S}_{i}$ of sets $S_{i}\subseteq E$ of resources. Additionally, we
+want to account for different demands of players on resources by fixing a
+demand for every player $i$ as $d_{i}\in\mathbb{N}$. Finally, the cost of a
+resource depends on the load the players put onto the resource modelled as
+individual cost functions $c_{e}:\mathbb{N}\rightarrow \mathbb{N}$ for every
+resource $e\in E$. As an example consider different actors that build a shared
+network infrastructure. The connections in the network are resources, the
+actors are the players which have individual spots they want to connect.
+Different actors might need different bandwidth for connections, i.e. their
+demands, and the cost for using connections depends on the used bandwidth.
+Accordingly we obtain a congestion model
+\begin{equation*}
+  \mathcal{M} = \tupel{N, E, \mathcal{S} = \times_{i\in N}\mathcal{S}_{i},
+  (d_{i})_{i\in N}, (c_{e})_{e\in E}}
+\end{equation*}
+for which we introduce some additional definitions:
+\begin{itemize}
+  \item for a profile $S\in\mathcal{S}$ we define
+    the demand on resource $e$ for $S$ as
+    $\ell(S) = \sum_{i\in N:e\in S_{i}}d_{i}$
+  \item we lift $c_{e}$ to the set $\mathcal{S}$ by setting
+    $c_{e}(S) = c_{e}(\ell_{e}(S))$ for $S\in\mathcal{S}$
+\end{itemize}
+\todo{complete list of auxilary definitions}
+
 \section{Matroids}
 In this section we present the combinatorial structure of Matroids.
 \todo{why matroids?}
@@ -36,8 +67,8 @@ properties, i.e.
     set that forms a linear independent set when added to the smaller set.
 \end{enumerate}
 We use an equivalent definition of matroids which in a way captures the idea of
-having a vector space by giving instead of linear independent sets the bases of
-the ground-set.
+bases of a vector space by giving the inclusion-wise maximal linear independent
+sets (in analogy also called bases).
 \begin{defi}
   The structure $\tupel{E, \mathcal{B}}$ with $\mathcal{B}\subseteq 2^{E}$ is
   a matroid if
@@ -121,6 +152,9 @@ them as follows.
     \ref{fig:spanning}.}
   \label{fig:cuts}
 \end{figure}
+
+\section{Unweighted Matroid Games}
+
 
 \todos
 
