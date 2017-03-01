@@ -50,8 +50,28 @@ for which we introduce some additional definitions:
   \item we lift $c_{e}$ to the set $\mathcal{S}$ by setting
     $c_{e}(S) = c_{e}(\ell_{e}(S))$ for $S\in\mathcal{S}$
 \end{itemize}
-\todo{complete list of auxilary definitions}
 
+The cost that results from a profile $S\in\mathcal{S}$ is covered by all
+players. To model this we consider the game 
+\begin{equation*}
+  G = \tupel{N, \mathcal{S}\times\mathcal{P}, \pi}
+\end{equation*}
+where $\mathcal{P} = \times_{i\in N}\mathcal{P}_{i}$ and
+$\mathcal{P}_{i} = |\mathbb{R}_{+}^{|E|}|$ to model how much every player
+contributes in paying for the cost of every resource. We denote the element
+from $\mathcal{P}_{i}$ for $e\in E$ with $p_{i}^{e}$ and call $e\in E$ bought
+under $\tupel{S, p}\in \mathcal{S}\times\mathcal{P}$ if
+$c_{e}(S)\leq \sum_{i\in N}p_{i}^{e}$. The function $\pi$ gives the payoff for
+every player for a strategy profile $\tupel{S, p}$ by
+\begin{equation*}
+  \pi_{i}(S, p) = \begin{cases}
+    \sum_{e\in E}p_{i}^{e} &\text{ if $S_{i}$ is bought under
+    $\tupel{S, p}$ (i.e. all $e\in S_{i}$ are bought)}\\
+    \infty &\text{ otherwise}
+  \end{cases}
+\end{equation*}
+Thus, every player tries to minimise her personal contribution to the costs
+but ensures that her demand is satisfied.
 \section{Matroids}
 In this section we present the combinatorial structure of Matroids.
 \todo{why matroids?}
