@@ -8,6 +8,7 @@
 \usetheme{metropolis}
 \title{Resource Buying Games}
 \author[C. Welzel]{Christoph Welzel}
+\date{March 3, 2017}
 
 \newcommand{\tupel}[1]{\left(#1\right)}
 \newcommand{\set}[1]{\left\{#1\right\}}
@@ -54,7 +55,7 @@
         \item<4-> $\ell_{e}(S) = \sum_{i\in N:e\in S_{i}}d_{i}$: load of $e$
           in configuration $S\in\mathcal{S}$
       \end{itemize}
-    \item<5-> $c_{e}:\mathbb{N}\rightarrow\mathbb{N}$ with
+    \item<5-> $c_{e}:\mathbb{N}\rightarrow\mathbb{R}_{+}$ with
       $c_{e}(S) = c_{e}(\ell_{e}(S))$: cost for the resource $e$ under the load
       of $S$
   \end{itemize}
@@ -316,7 +317,7 @@
         \item<4-> Lemma: cost of the chosen element decreases monotonically in each
           iteration
         \item<5-> assume there is a beneficial alternative basis
-          $\hat{B} = (B_{i}\setminus\set{g})\cup{f}$
+          $\hat{B} = (B_{i}\setminus\set{g})\cup{\set{f}}$
           \begin{itemize}
             \item<6-> consider iteration $k$ in which $g$ is added to basis of $i$:
             \item<7-> if $f$ is in the corresonponding cut its cost never changes
