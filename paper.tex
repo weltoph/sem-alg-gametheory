@@ -31,10 +31,10 @@ $\mathcal{S}_{i}$ of sets $S_{i}\subseteq E$ of resources. Additionally, we
 want to account for different demands of players on resources by fixing a
 demand for every player $i$ as $d_{i}\in\mathbb{N}$. Finally, the cost of a
 resource depends on the load the players put onto the resource modelled as
-individual cost functions $c_{e}:\mathbb{N}\rightarrow \mathbb{N}$ for every
-resource $e\in E$. As an example consider different actors that build a shared
-network infrastructure. The connections in the network are resources, the
-actors are the players which have individual spots they want to connect.
+individual cost functions $c_{e}:\mathbb{N}\rightarrow \mathbb{R}_{+}$ for
+every resource $e\in E$. As an example consider different actors that build a
+shared network infrastructure. The connections in the network are resources,
+the actors are the players which have individual spots they want to connect.
 Different actors might need different bandwidth for connections, i.e. their
 demands, and the cost for using connections depends on the used bandwidth.
 Accordingly we obtain a congestion model
@@ -49,10 +49,17 @@ for which we introduce some additional definitions:
     $\ell(S) = \sum_{i\in N:e\in S_{i}}d_{i}$
   \item we lift $c_{e}$ to the set $\mathcal{S}$ by setting
     $c_{e}(S) = c_{e}(\ell_{e}(S))$ for $S\in\mathcal{S}$
+  \item we call $c_{e}$ \emph{marginally non-increasing} if
+    $c_{e}(y + \delta) - c_{e}(y) \leq c_{e}(x + \delta) - c_{e}(x)$ holds
+    for all $x,y,\delta\in N$ with $x\leq y$
+  \item analogously $c_{e}$ is \emph{marginally non-decreasing} if
+    $c_{e}(y + \delta) - c_{e}(y) \geq c_{e}(x + \delta) - c_{e}(x)$ holds
+    for all $x,y,\delta\in N$ with $x\leq y$
 \end{itemize}
+Note that linear and constant cost functions are marginally non-increasing.
 
 The cost that results from a profile $S\in\mathcal{S}$ is covered by all
-players. To model this we consider the game 
+players. To model this we consider the resource buying game 
 \begin{equation*}
   G = \tupel{N, \mathcal{S}\times\mathcal{P}, \pi}
 \end{equation*}
@@ -173,7 +180,22 @@ them as follows.
   \label{fig:cuts}
 \end{figure}
 
-\section{Unweighted Matroid Games}
+\section{Unweighted Matroid Games with marginally non-increasing cost
+functions}
+We present an algorithm which computes pure Nash equilibria in unweighted
+matroid games with marginally non-increasing cost functions. Firstly, an
+unweighted matroid game builds upon a congestion model of the form
+$\tupel{N, E, \mathcal{B} = \times_{i\in N}\mathcal{B}_{i},
+(d_{i})_{i\in N}, (c_{e})_{e\in E}}$ where for all $i\in N$ holds $d_{i} = 1$
+(unweighted) and every $\mathcal{B}_{i}$ is the set of bases for some matroid
+$\mathcal{M}_{i} = \tupel{E_{i}, \mathcal{B}_{i}}$. The set of resources is
+given by the matroids of the players $E = \bigcup_{i\in N}E_{i}$ and all cost
+functions $c_{e}$ are marginally non-increasing. The algorithm
+we present in the following chooses a basis for every player by iteratively
+adding one element from a cut and contracting the matroid to the added element
+while deleting all other elements from the cut. Since cuts are inclusion-wise
+minimal deleting all but one element from one cut leaves at least one possible
+basis for the player available.
 
 
 \todos
