@@ -195,8 +195,15 @@ we present in the following chooses a basis for every player by iteratively
 adding one element from a cut and contracting the matroid to the added element
 while deleting all other elements from the cut. Since cuts are inclusion-wise
 minimal deleting all but one element from one cut leaves at least one possible
-basis for the player available.
-
+basis for the player available. For every player we maintain the elements which
+are chosen for her up to the current state (\emph{working basis}) and which
+elements are still available to build her basis (\emph{ground-set}) and which
+bases she can still use. Initially the working basis is empty and the
+ground-set and available bases are taken from the matroid of the player. For
+every resource we maintain the cost the next added load causes and how much
+load already is placed upon the resource(\emph{current load}). Initially for
+every resource $e$ the current load is zero and the next load causes $c_{e}(1)$
+cost.
 
 \todos
 
