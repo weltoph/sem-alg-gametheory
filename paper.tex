@@ -129,12 +129,12 @@ can be used to again obtain a spanning tree\footnote{see Figure
   \caption{Graph with its spanning trees.}
   \label{fig:spanning}
 \end{figure}
-\todo[done]{working iteratively towards a basis by prim's algorithm as example
-to introduce cuts and contractions and deletions}
-Consider the algorithm of Prim which computes spanning trees by iteratively
+\todo[done]{working iteratively towards a basis by kruskal's algorithm as
+example to introduce cuts and contractions and deletions}
+Consider the algorithm of Kruskal which computes spanning trees by iteratively
 adding edges which do not close a cycle: every added edge works towards a basis
-in $\mathcal{S}$ and opens a dimensionality by connecting one of the graph
-nodes. When an edge is added the result of the algorithm can only compute
+in $\mathcal{S}$ and opens a dimensionality by connecting already computed
+components.  When an edge is added the result of the algorithm can only compute
 certain spanning trees, namely those which contain all edges added up to this
 point. Fixing certain elements in matroids and therefore restricting the set of
 \enquote{useable} bases is captured by the \emph{contraction} operation on
@@ -190,20 +190,81 @@ $\tupel{N, E, \mathcal{B} = \times_{i\in N}\mathcal{B}_{i},
 (unweighted) and every $\mathcal{B}_{i}$ is the set of bases for some matroid
 $\mathcal{M}_{i} = \tupel{E_{i}, \mathcal{B}_{i}}$. The set of resources is
 given by the matroids of the players $E = \bigcup_{i\in N}E_{i}$ and all cost
-functions $c_{e}$ are marginally non-increasing. The algorithm
-we present in the following chooses a basis for every player by iteratively
-adding one element from a cut and contracting the matroid to the added element
-while deleting all other elements from the cut. Since cuts are inclusion-wise
-minimal deleting all but one element from one cut leaves at least one possible
-basis for the player available. For every player we maintain the elements which
-are chosen for her up to the current state (\emph{working basis}) and which
-elements are still available to build her basis (\emph{ground-set}) and which
-bases she can still use. Initially the working basis is empty and the
-ground-set and available bases are taken from the matroid of the player. For
-every resource we maintain the cost the next added load causes and how much
-load already is placed upon the resource(\emph{current load}). Initially for
-every resource $e$ the current load is zero and the next load causes $c_{e}(1)$
-cost.
+functions $c_{e}$ are marginally non-increasing.
+
+The algorithm we present in the following chooses a basis for every player by
+iteratively adding one element from a cut and contracting the matroid to the
+added element while deleting all other elements from the cut. Since cuts are
+inclusion-wise minimal deleting all but one element from one cut leaves at
+least one possible basis for the player available. For every player we maintain
+the elements which are chosen for her up to the current state
+(\emph{working basis}) and which elements are still available to build her
+basis (\emph{ground-set}) and which bases she can still use. Initially the
+working basis is empty and the ground-set and available bases are taken from
+the matroid of the player. For every resource we maintain the cost the next
+added load causes and how much load already is placed upon the
+resource(\emph{current load}). Initially for every resource $e$ the current
+load is zero and the next load causes $c_{e}(1)$ cost. We can devide the
+algorithm into four steps as presented in Figure \ref{alg:main}.
+\begin{figure}
+  \begin{tabular}{|lll|}
+    \hline
+    (i) & Init: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+        \begin{itemize}
+          \item \parbox{0.7\textwidth}{every player: empty working basis,
+            complete ground-set, complete set of valid result bases}
+          \item every resource: cost for next load, current load
+        \end{itemize}
+      }\\\hline
+    (ii) & Find: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+        \begin{itemize}
+          \item inclusion-min (necessary cost)-max cut $C$
+          \item minimal cost resource $e$ in $C$
+          \item owner $i$ of $C$
+        \end{itemize}
+      }\\\hline
+    (iii) & Pick: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+        \begin{itemize}
+          \item $i$: add $e$ to working basis, contract matroid to $e$
+          \item $e$: update marginal cost and increase load
+          \item all player: delete elements $C\setminus\set{e}$ from matroid
+        \end{itemize}
+      }\\\hline
+    (iv) & Break: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+        \begin{itemize}
+          \item exists player with incomplete basis: goto (ii)
+          \item otherwise: return chosen bases and payments
+        \end{itemize}
+      }\\\hline
+  \end{tabular}
+  \caption{Algorithm to compute a PNE for unweighted matroid games with
+    marginally non-increasing cost functions. Note that in step (ii) only
+    inclusion-wise minimal cuts are considered (specifically the one for which
+    minimal cost of all elements in the cut is maximal over all considered cuts
+    is chosen). Restricting the selection to inclusion-wise minimal cuts
+    ensures that removing all other elements preserves possible bases for
+    \emph{all} players}
+  \label{alg:main}
+\end{figure}
+By induction on the iterations one can prove that the cost of the chosen
+element in step (ii) always decreases. This is a key lemma to prove the
+correctness of the algorithm. Because, if we assume to have a beneficial
+alternative to the computed basis for one player there is an element with
+less cost. This alternative element is not part of the selected cut since
+it would be removed for all players and thus keep its marginal cost although
+only elements with higher costs are removed (by choice of the element in the
+cut). Furthermore, the alternative element cannot be available to the player
+for which the cut is selected since both elements open the
+\enquote{same dimensionality} in contradiction to choosing a cut. Thus, the
+alternative element has been removed before which implies less cost in a
+previous step to the iteration where the original element was chosen. This
+contradicts the monotonicity of costs of considered elements through the
+iterations. Thus
+\begin{theo}
+  The presented algorithm computes a PNE.
+\end{theo}
+
+\section{Weighted Matroid Games}
 
 \todos
 
