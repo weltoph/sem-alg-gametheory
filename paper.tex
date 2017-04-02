@@ -10,6 +10,8 @@
 \theoremstyle{nonumberplain}
 \newframedtheorem{defi}{Definition}
 \newframedtheorem{theo}{Theorem}
+\newframedtheorem{lemma}{Lemma}
+
 
 \newcommand{\tupel}[1]{\left(#1\right)}
 \newcommand{\set}[1]{\left\{#1\right\}}
@@ -349,6 +351,58 @@ Thus, we prove the following theorem:
   $\mathcal{S}_{1}$ and $\mathcal{S}_{2}$ are both isomorphic to $\mathcal{S}$,
   so that $G$ does not posses a PNE.
 \end{theo}
+As said before we start with an anti-chain $\mathcal{S}\subseteq 2^{E}$ which
+specifically does \emph{not} satisfy the matroid properties. Hence
+$\mathcal{S}$ contains two sets $X, Y$ s.t. there is one element in $X$ for
+which we cannot find a single element in $Y$ to obtain an element from
+$\mathcal{S}$ again. Intuitively, the dimension of one element in $X$ needs
+two elements from $Y$ to be become available. This can be formally described
+by the following lemma:
+\begin{lemma}
+  If $\mathcal{S}\subseteq 2^{E}$ is a non-matroid anti-chain, then there exist
+  $X,Y\in\mathcal{S}$ and $\set{a,b,c}\subseteq X\cup Y$ such that each
+  $Z\in\mathcal{S}$ with $Z\subseteq(X\cup Y)\setminus\set{a}$ contains both,
+  $b$ and $c$.
+\end{lemma}
+Especially we can guarantee that there are two elements in $\mathcal{S}$ s.t.
+one contains $a$ (but not $b$ and $c$) and the other $b$ and $c$ (but not $a$).
+In the following we construct a game which does not possess a PNE. The
+constructed game is illustrated in Figure \ref{fig:game} for better
+understanding.
+\begin{figure}
+  \input{tikz/gamediagram}
+  \caption{Illustration of constructed game which does not possess a PNE.}
+  \label{fig:game}
+\end{figure}
+We consider two isomorphic copies of $\mathcal{S}$:
+$\mathcal{S}_{1},\mathcal{S}_{2}$ and by previous lemma there are
+$X_{i}, Y_{i}\in\mathcal{S}_{i}$ for $i = 1,2$ as described above. We interleaf
+the ground-sets of $\mathcal{S}_{1}$ and $\mathcal{S}_{2}$ by precisely three
+elements $x,y,z$ which we identify in both copies differently. Namely, we set
+$x = a_{1} = b_{2}$, $y = b_{1} = a_{2}$, and $z = c_{1} = c_{2}$. The set of
+resources for $G$ is now the union of both ground-sets w.r.t. the intersection
+which is $\set{x,y,z}$. Furthermore we fix the cost functions of all elements
+in $\tilde{E}\setminus{X_{1}\cup X_{2}\cup Y_{1}\cup Y_{2}}$ to a high constant
+$M$ which ensures that both players only play within $X_{i}, Y_{i}$ (for
+$i = 1,2$ respectively). In this \enquote{sub-arena} we set the cost functions
+of all elements other than $\set{x,y,z}$ to $0$ regardless of the demand. And
+concludingly we set $c_{x}(t) = t$, $c_{y}(t) = 5\frac{1}{2}$, and
+$c_{z}(t) = 4$ and an individual demand of the players of $d_{1} = 5$ and
+$d_{2} = 4$. Thus, each player either contributes to pay for her/his $a$ or
+to $b$ and $c$. Assuming there is a PNE
+$\tupel{Z^{\ast} = \tupel{Z_{1}^{\ast}, Z_{2}^{\ast}},
+p^{\ast} = \tupel{p_{1}^{\ast}, p_{2}^{\ast}}}$ we can conclude by the choice
+of $\set{x,y,z}$ that
+\begin{equation*}
+  x\notin Z_{1}^{\ast}\Rightarrow \set{y,z}\subseteq Z_{1}^{\ast} \text{ and }
+  y\notin Z_{2}^{\ast}\Rightarrow \set{x,z}\subseteq Z_{2}^{\ast}
+\end{equation*}
+By examining the restricted environment of the cost inducing elements ($x,y,z$)
+and the conclusion that one player either only contributes to $x$ or $y$ and
+$z$ and the other only to $y$ or $x$ and $z$ one can conclude that neither
+$x\in Z_{1}^{\ast}$ nor $x\notin Z_{1}^{\ast}$ which yields a contradiction to
+the existence of a PNE and thus concludes the argument on the section-leading
+theorem.
 
 \todos
 
