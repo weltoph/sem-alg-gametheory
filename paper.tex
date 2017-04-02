@@ -14,6 +14,8 @@
 \newcommand{\tupel}[1]{\left(#1\right)}
 \newcommand{\set}[1]{\left\{#1\right\}}
 
+\DeclareMathOperator{\ex}{ex}
+
 \title{Resource Buying Games}
 \author{Christoph Welzel}
 
@@ -265,6 +267,70 @@ iterations. Thus
 \end{theo}
 
 \section{Weighted Matroid Games}
+Starting from a congestion model where every player aims to buy a basis from
+a certain matroid and every player puts an individual demand upon the resources
+she/he uses we derive a complete characterisation of PNEs as well as show that
+every socially optimal solution actually induces a PNE. Firstly, we give some
+auxiliary definitions (with a profile $B\in\mathcal{B}$, a resource $e\in E$):
+\begin{itemize}
+  \item $N_{e}(B) = \set{i\in N\middle| e\in B_{i}}$ is the set of players
+    which use resource $e$ in the profile $B$
+  \item $\ex_{i}(e) = \set{f\in E\setminus\set{e}\middle|
+    (B_{i}\setminus\set{e})\cup\set{f}\in\mathcal{B}_{i}}$ is the set of
+    resources player $i\in N_{e}(B)$ could exchange $e$ with
+  \item $F$ is the set of resources that is obligatory for any player, i.e.
+    every element of $F$ is present in \emph{all} bases of one (or more) player
+  \item $\Delta_{i}\tupel{B;e\rightarrow f}$ is the marginal cost player $i$
+    has to pay for resource $f$ if he intends to use $f$ instead of $e$
+    (we define the minimum over all resources $e$ can be exchanged with as
+    $\Delta_{i}^{e}(B) = \min_{f\in\ex_{i}(e)}\Delta_{i}(B;e\rightarrow f)$)
+\end{itemize}
+With these definitions we can formulate the following characterisation of
+PNEs which holds for all non-negative and non-decreasing cost functions.
+\begin{theo}
+  For a weighted matroid resource buying game $\tupel{N, E, \mathcal{B}, d, c}$
+  there is a payment vector $p$ s.t. $\tupel{B\in\mathcal{B}, p}$ is a PNE
+  if and only if
+  \begin{equation*}
+    c_{e}(B)\leq\sum_{i\in N_{e}(B)}\Delta_{i}^{e}(B) \text{ for all } e\in
+    E\setminus F
+  \end{equation*}
+\end{theo}
+The \enquote{only if} direction is easily given by the fact that the cost
+of a resource is the sum of the contributions of every player for this resource
+and no player has an incentive to uniliterally change to another basis of
+her/his matroid. While, for the \enquote{if} direction, we let for elements in
+$F$ one player for whom this resource is obligatory pay for this resource
+(since she/he needs this resource to be available she/he can not choose to
+uniliterally change her/his payment). For all other elements we can define the
+payments as follows:
+\begin{equation*}
+  p_{i}^{e} = \begin{cases}
+    0 &\text{ if } \sum_{j\in N_{e}(B)}\Delta_{j}^{e}(B) = 0\\
+    \underbrace{
+      \frac{c_{e}(B)}{\sum_{j\in N_{e}(B)}\Delta_{j}^{e}(B)}
+    }_{\leq 1}\cdot\Delta_{i}^{e}(B) &\text{ otherwise}
+  \end{cases}
+\end{equation*}
+which yields $p_{i}^{e}\leq \Delta_{i}^{e}$ for all $e\in E\setminus F$
+implying a PNE.
+
+Using this one can derive a series of inequalities to show that every socially
+optimal solution satisfies the given characterisation and hence
+\begin{theo}
+  Every weighted matroid resource buying game with marginally non-increasing
+  cost functions posses a PNE.
+\end{theo}
+For completeness we present - without going into details - an analogous result
+for non-decreasing cost functions. Again starting from a socially optimal
+configuration one can derive a pricing vector (called marginal cost pricing)
+which forms with the given configuration a PNE. Especially this result is
+also viable for non-matroid strategy spaces, yielding:
+\begin{theo}
+  Let $G$ be a weighted resource buying game with non-decreasing marginal costs
+  and let $S^{\ast}$ be a socially optimal solution. Then, marginal cost
+  pricing induces a PNE.
+\end{theo}
 
 \todos
 
