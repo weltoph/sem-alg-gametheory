@@ -54,7 +54,7 @@ present proofs not in exhaustive detail but try to convey the central ideas.
 
 We start by defining an appropiate congestion model and an associated
 strategic game as well as by introducing matroids as combinatorial structures
-to model desired configurations of resources for players. Following we present
+to model desired configurations of resources for players. Following, we present
 an algorithm to compute PNEs in unweighted matroid games with marginally
 non-increasing cost functions and its correctness proof.
 Afterwards, we examine weighted matroid games with different cost functions
@@ -240,11 +240,11 @@ given by the matroids of the players $E = \bigcup_{i\in N}E_{i}$ and all cost
 functions $c_{e}$ are marginally non-increasing.
 
 The algorithm we present in the following chooses a basis for every player by
-iteratively adding one element from a cut and contracting the matroid to the
-added element while deleting all other elements from the cut. Since cuts are
-inclusion-wise minimal deleting all but one element from one cut leaves at
-least one possible basis for the player available. For every player we maintain
-the elements which are chosen for her/him up to the current state
+iteratively adding one element from a cut and contracting the matroid of the
+player to the added element while deleting all other elements from the cut.
+Since cuts are inclusion-wise minimal deleting all but one element from one cut
+leaves at least one possible basis for the player available. For every player
+we maintain the elements which are chosen for her/him up to the current state
 (\emph{working basis}) and which elements are still available to build her
 basis (\emph{ground-set}) and which bases she can still use. Initially the
 working basis is empty and the ground-set and available bases are taken from
@@ -302,8 +302,8 @@ algorithm into four steps as presented in Figure \ref{alg:main}.
 \end{figure}
 By induction on the number of iterations we can prove that the cost of the
 chosen element in step (ii) always decreases. This is a key insight to prove
-the correctness of the algorithm. Because, if we assume to have a beneficial
-alternative to the computed basis for one player there must exist an element
+the correctness of the algorithm because, if we assume to have a beneficial
+alternative to the computed basis for one player, there must exist an element
 with less cost. This alternative element cannot be part of the selected cut
 since it would be removed for all players and thus keep its marginal cost
 although only elements with higher costs are removed (by choice of the element
@@ -395,8 +395,8 @@ cost functions since other structures cannot guarantee the existence of PNEs.
 Thus, we prove the following theorem:
 \begin{theo}
   For every non-matroid anti-chain $\mathcal{S}$ (i.e. a family of sets which
-  are not ordered by $\subseteq$) on a set of resources $E$, there exists a
-  weighted two-player resource buying game $G = \tupel{\tilde{E},
+  are pairwisely not ordered by $\subseteq$) on a set of resources $E$, there
+  exists a weighted two-player resource buying game $G = \tupel{\tilde{E},
     (\mathcal{S}_{1}\times \mathcal{S}_{2})\times\mathcal{P},\pi}$
   having marginally non-increasing cost functions, whose strategy spaces
   $\mathcal{S}_{1}$ and $\mathcal{S}_{2}$ are both isomorphic to $\mathcal{S}$,
