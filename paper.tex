@@ -30,14 +30,14 @@
 \maketitle
 \section{Introduction}
 In this paper we examine a certain class of games based on congestion models.
-Intuitively speaking we consider a set of resources and actors with individual
+Intuitively speaking, we consider a set of resources and actors with individual
 demands on this set of resources. We model this competing behaviour of actors
-in terms of strategic games which are applicable for analysis in regards of
+in terms of strategic games which are applicable for analysis regarding
 Nash equilibria. Mainly, we are interested in the existence and computability
 of pure Nash equilibria (PNE), i.e. a state where each actor has no interest
-to uniliterally change her/his behaviour if all other players stick to their
-strategy. We examine congestion models with different cost functions of
-resource, different structures of resources each player wants to be available
+to unilaterally change her/his behaviour if all other players stick to their
+strategy. We examine congestion models with different cost functions for
+resources, different structures of resources each player wants to be available
 and different demand of players on her/his resources. As main results we prove
 the existence of PNE for
 \begin{itemize}
@@ -46,36 +46,36 @@ the existence of PNE for
 \end{itemize}
 In terms of complexity we present an algorithm to compute a PNE for unweighted
 (i.e. uniform demands for all players) matroid games with marginally
-non-increasing cost functions. Additionally, we construct for non-matroid
-structures congestion games with marginally non-increasing cost functions which
+non-increasing cost functions. Additionally, we construct congestion games for
+non-matroid structures with marginally non-increasing cost functions which
 specifically do not allow for PNEs. This paper only presents results and
-arguments from \cite{main}. Specifically we focus on intuitions and thus
-present proofs not in exhaustive detail but try to conway the central ideas.
+arguments from \cite{main}. Specifically, we focus on intuitions and thus
+present proofs not in exhaustive detail but try to convey the central ideas.
 
-We start with defining an appropiate congestion model and an associated
-strategic game as well as introducing matroids as combinatorial structure
-to model desired configurations of resources for players. Following an
-algorithm to compute PNEs in unweighted matroid games with marginally
-non-increasing cost functions as well as its correctness proof is presented.
-Afterwards weighted matroid games with different cost functions are examined
+We start by defining an appropiate congestion model and an associated
+strategic game as well as by introducing matroids as combinatorial structures
+to model desired configurations of resources for players. Following we present
+an algorithm to compute PNEs in unweighted matroid games with marginally
+non-increasing cost functions and its correctness proof.
+Afterwards, we examine weighted matroid games with different cost functions
 and concludingly, we study non-matroid configuration spaces.
 
 \section{Congestion Model}
-In this section we want to introduce a structure to model resources and demands
+In this section, we introduce a structure to model resources and demands
 of actors on resources. Therefore, we consider a set of players $N$ and a set
 of resources $E$. Every player has a personal aim which can be achieved by
-different resources. This is modelled for a player $i\in N$ as family
+different resources. This is modelled for a player $i\in N$ as a family
 $\mathcal{S}_{i}$ of sets $S_{i}\subseteq E$ of resources. Additionally, we
 want to account for different demands of players on resources by fixing a
 demand for every player $i$ as $d_{i}\in\mathbb{N}$. Finally, the cost of a
 resource depends on the load the players put onto the resource modelled as
 individual cost functions $c_{e}:\mathbb{N}\rightarrow \mathbb{R}_{+}$ for
-every resource $e\in E$. As an example consider different actors that build a
+every resource $e\in E$. As an example, consider different actors that build a
 shared network infrastructure. The connections in the network are resources,
-the actors are the players which have individual spots they want to connect.
+the actors are the players which have individual nodes they want to connect.
 Different actors might need different bandwidth for connections, i.e. their
 demands, and the cost for using connections depends on the used bandwidth.
-Accordingly we obtain a congestion model
+Accordingly, we obtain a congestion model
 \begin{equation*}
   \mathcal{M} = \tupel{N, E, \mathcal{S} = \times_{i\in N}\mathcal{S}_{i},
   (d_{i})_{i\in N}, (c_{e})_{e\in E}}
@@ -84,7 +84,7 @@ for which we introduce some additional definitions:
 \begin{itemize}
   \item for a profile $S\in\mathcal{S}$ we define
     the demand on resource $e$ for $S$ as
-    $\ell(S) = \sum_{i\in N:e\in S_{i}}d_{i}$
+    $\ell_{e}(S) = \sum_{i\in N:e\in S_{i}}d_{i}$
   \item we lift $c_{e}$ to the set $\mathcal{S}$ by setting
     $c_{e}(S) = c_{e}(\ell_{e}(S))$ for $S\in\mathcal{S}$
   \item we call $c_{e}$ \emph{marginally non-increasing} if
@@ -97,40 +97,46 @@ for which we introduce some additional definitions:
 Note that linear and constant cost functions are marginally non-increasing.
 
 The cost that results from a profile $S\in\mathcal{S}$ is covered by all
-players. To model this we consider the resource buying game 
-\begin{equation*}
-  G = \tupel{N, \mathcal{S}\times\mathcal{P}, \pi}
-\end{equation*}
-where $\mathcal{P} = \times_{i\in N}\mathcal{P}_{i}$ and
-$\mathcal{P}_{i} = \mathbb{R}_{+}^{|E|}$ to model how much every player
-contributes in paying for the cost of every resource. We denote the element
-from $\mathcal{P}_{i}$ for $e\in E$ with $p_{i}^{e}$ and call $e\in E$ bought
-under $\tupel{S, p}\in \mathcal{S}\times\mathcal{P}$ if
-$c_{e}(S)\leq \sum_{i\in N}p_{i}^{e}$. The function $\pi$ gives the payoff for
-every player for a strategy profile $\tupel{S, p}$ by
-\begin{equation*}
-  \pi_{i}(S, p) = \begin{cases}
-    \sum_{e\in E}p_{i}^{e} &\text{ if $S_{i}$ is bought under
-    $\tupel{S, p}$ (i.e. all $e\in S_{i}$ are bought)}\\
-    \infty &\text{ otherwise}
-  \end{cases}
-\end{equation*}
-Thus, every player tries to minimise her personal contribution to the costs
+players. This leads to a definition of resource buying game:
+\begin{defi}
+  For a congestion model $\mathcal{M} = \tupel{N, E, \mathcal{S},
+  \tupel{d_{i}}_{i\in N}, \tupel{c_{e}}_{e\in E}}$ we define a
+  \emph{resource buying game}
+  \begin{equation*}
+    G = \tupel{N, \mathcal{S}\times\mathcal{P}, \pi}
+  \end{equation*}
+  with $\mathcal{P} = \times_{i\in N}\mathcal{P}_{i}$ and
+  $\mathcal{P}_{i} = \mathbb{R}_{+}^{|E|}$ (which is the contribution of each
+  player to buy the demanded strategy profile).
+  We denote the element from $\mathcal{P}_{i}$ for $e\in E$ with $p_{i}^{e}$
+  and call $e\in E$ \emph{bought} under $\tupel{S, p}\in
+  \mathcal{S}\times\mathcal{P}$ if $c_{e}(S)\leq \sum_{i\in N}p_{i}^{e}$. The
+  function $\pi$ defines the payoff for every player for a strategy profile
+  $\tupel{S, p}$ by
+  \begin{equation*}
+    \pi_{i}(S, p) = \begin{cases}
+      \sum_{e\in E}p_{i}^{e} &\text{ if $S_{i}$ is bought under
+      $\tupel{S, p}$ (i.e. all $e\in S_{i}$ are bought)}\\
+      \infty &\text{ otherwise}
+    \end{cases}
+  \end{equation*}
+\end{defi}
+Thus, every player tries to minimise her/his personal contribution to the costs
 but ensures that her/his demand is satisfied.
 \section{Matroids}
 In this section we present the combinatorial structure of matroids
 \todo{why matroids?}
 which we use as a generalisation of the concept of linear independence.
-Matroids can be defined as a ground-set and the family of linear
+Matroids can be defined as a ground-set and the family of linearly
 independent sets of this ground-set. This family has to satisfy three
 properties, i.e.
 \begin{enumerate}
-  \item the empty set is linear independent,
-  \item all subset of a linear independent set are linear independent and
-  \item for two linear independent sets we can find an element of the larger
-    set that forms a linear independent set when added to the smaller set.
+  \item the empty set is linearly independent,
+  \item all subsets of a linearly independent set are linearly independent and
+  \item for two linearly independent sets we can find an element of the larger
+    set that forms a linearly independent set when added to the smaller set.
 \end{enumerate}
-We use an equivalent definition of matroids which in a way captures the idea of
+We use an equivalent definition of matroids which captures the idea of
 bases of a vector space by giving the inclusion-wise maximal linear independent
 sets (in analogy also called bases).
 \begin{defi}
@@ -169,8 +175,9 @@ can be used to again obtain a spanning tree\footnote{see Figure
 \todo[done]{working iteratively towards a basis by kruskal's algorithm as
 example to introduce cuts and contractions and deletions}
 Consider the algorithm of Kruskal \cite{kruskal} which computes spanning trees
-by iteratively adding edges which do not close a cycle: every added edge works
-towards a basis in $\mathcal{S}$ and opens a dimensionality by connecting
+by iteratively adding edges to a result which do not close a cycle in the
+subgraph induced by the edges in the result: every added
+edge works towards a basis in $\mathcal{S}$ and opens a dimension by connecting
 already computed components. When an edge is added the result of the algorithm
 can only compute certain spanning trees, namely those which contain all edges
 added up to this point. Fixing certain elements in matroids and therefore
@@ -187,7 +194,7 @@ disregard all bases which use a certain element (in Kruskal's algorithm upon
 adding an edge we can remove all other edges connecting the same components).
 \begin{defi}
   For a matroid $\mathcal{M} = \tupel{E, \mathcal{B}}$ and one $e\in E$ we call
-  the matroid $\tupel{E\setminus\set{e}, \set{C\subseteq
+  the matroid $\tupel{E\setminus\set{e}, \set{B\subseteq
   (E\setminus\set{e})\middle| B\in\mathcal{B}}}$ the \emph{deletion} of $e$ in
   $\mathcal{M}$, denoted by $\mathcal{M}\setminus e$.
 \end{defi}
@@ -195,12 +202,12 @@ In the context of graphs and the spanning tree matroids the contraction and
 deletion operation corresponds to the contraction of two nodes connected by
 an edge and the deletion of an edge respectively. Note that a deletion
 operation is not necessarily well defined for all elements of the ground-set,
-e.g. deletion of an edge in the spanning tree matroid which is a bridge yields
-an empty set of bases and thus no valid matroid. Analogously, any set of edges
-that, when removed, disconnect the graph contains at least one element
-necessarily present in any basis. We call such sets cuts\footnote{see Figure
-\ref{fig:cuts} for an illustration} and define them as follows.
-\begin{defi}
+e.g. deletion of an edge in the graph which is a bridge yields
+an empty set of bases in the spanning tree matroid and thus no valid matroid.
+Analogously, any set of edges that, when removed, disconnects the graph
+contains at least one element necessarily present in any basis. We call such
+sets cuts\footnote{see Figure \ref{fig:cuts} for an illustration} and define
+them as follows.  \begin{defi}
   Let $\mathcal{M} = \tupel{E, \mathcal{B}}$ be a matroid. A \emph{cut}
   $C\subseteq E$ is an inclusion-wise minimal set s.t. $E\setminus C$ does not
   contain any basis in $\mathcal{B}$.
@@ -224,7 +231,7 @@ necessarily present in any basis. We call such sets cuts\footnote{see Figure
 functions}
 We present an algorithm which computes pure Nash equilibria in unweighted
 matroid games with marginally non-increasing cost functions. Firstly, an
-unweighted matroid game builds upon a congestion model of the form
+unweighted matroid game is based on a congestion model of the form
 $\tupel{N, E, \mathcal{B} = \times_{i\in N}\mathcal{B}_{i},
 (d_{i})_{i\in N}, (c_{e})_{e\in E}}$ where for all $i\in N$ holds $d_{i} = 1$
 (unweighted) and every $\mathcal{B}_{i}$ is the set of bases for some matroid
@@ -237,46 +244,48 @@ iteratively adding one element from a cut and contracting the matroid to the
 added element while deleting all other elements from the cut. Since cuts are
 inclusion-wise minimal deleting all but one element from one cut leaves at
 least one possible basis for the player available. For every player we maintain
-the elements which are chosen for her up to the current state
+the elements which are chosen for her/him up to the current state
 (\emph{working basis}) and which elements are still available to build her
 basis (\emph{ground-set}) and which bases she can still use. Initially the
 working basis is empty and the ground-set and available bases are taken from
 the matroid of the player. For every resource we maintain the cost the next
-added load causes and how much load already is placed upon the
-resource(\emph{current load}). Initially for every resource $e$ the current
-load is zero and the next load causes $c_{e}(1)$ cost. We can devide the
+added load causes and how much load already is placed on the resource
+(\emph{current load}). Initially, for every resource $e$ the current
+load is zero and the next load causes $c_{e}(1)$ cost. We can divide the
 algorithm into four steps as presented in Figure \ref{alg:main}.
 \begin{figure}
-  \begin{tabular}{|lll|}
-    \hline
-    (i) & Init: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
-        \begin{itemize}
-          \item \parbox{0.7\textwidth}{every player: empty working basis,
-            complete ground-set, complete set of valid result bases}
-          \item every resource: cost for next load, current load
-        \end{itemize}
-      }\\\hline
-    (ii) & Find: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
-        \begin{itemize}
-          \item inclusion-min (necessary cost)-max cut $C$
-          \item minimal cost resource $e$ in $C$
-          \item owner $i$ of $C$
-        \end{itemize}
-      }\\\hline
-    (iii) & Pick: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
-        \begin{itemize}
-          \item $i$: add $e$ to working basis, contract matroid to $e$
-          \item $e$: update marginal cost and increase load
-          \item all player: delete elements $C\setminus\set{e}$ from matroid
-        \end{itemize}
-      }\\\hline
-    (iv) & Break: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
-        \begin{itemize}
-          \item exists player with incomplete basis: goto (ii)
-          \item otherwise: return chosen bases and payments
-        \end{itemize}
-      }\\\hline
-  \end{tabular}
+  \begin{center}
+    \begin{tabular}{|lll|}
+      \hline
+      (i) & Init: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+          \begin{itemize}
+            \item \parbox{0.7\textwidth}{every player: empty working basis,
+              complete ground-set, complete set of valid result bases}
+            \item every resource: cost for next load, current load
+          \end{itemize}
+        }\\\hline
+      (ii) & Find: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+          \begin{itemize}
+            \item inclusion-min (necessary cost)-max cut $C$
+            \item minimal cost resource $e$ in $C$
+            \item owner $i$ of $C$
+          \end{itemize}
+        }\\\hline
+      (iii) & Pick: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+          \begin{itemize}
+            \item $i$: add $e$ to working basis, contract matroid to $e$
+            \item $e$: update marginal cost and increase load
+            \item all players: delete elements $C\setminus\set{e}$ from matroid
+          \end{itemize}
+        }\\\hline
+      (iv) & Break: &\hspace{-0.6cm}\parbox{0.8\textwidth}{
+          \begin{itemize}
+            \item if exists player with incomplete basis: goto (ii)
+            \item otherwise: return chosen bases and payments
+          \end{itemize}
+        }\\\hline
+    \end{tabular}
+  \end{center}
   \caption{Algorithm to compute a PNE for unweighted matroid games with
     marginally non-increasing cost functions. Note that in step (ii) only
     inclusion-wise minimal cuts are considered (specifically the one for which
@@ -285,35 +294,36 @@ algorithm into four steps as presented in Figure \ref{alg:main}.
     ensures that removing all other elements preserves possible bases for
     \emph{all} players. Also the algorithm terminates in at most $|N|\cdot|E|$
     iterations (each iteration disgards at least one element for one player).
-    For a more detailed pseudo-code representation and an description of how to
-    compute the minimal cut and the minimal cost element within we refer to
-    \cite[Algorithm 1 and 3.3 A Subroutine to Detect $C^{\ast}, e^{\ast}$ and
-    $i^{\ast}$]{main}.}
+    For a more detailed pseudo-code representation and a description of how to
+    compute the minimal cut and the minimal cost element in this cut we refer
+    to \cite[Algorithm 1 and 3.3 A Subroutine to Detect $C^{\ast}, e^{\ast}$
+    and $i^{\ast}$]{main}.}
   \label{alg:main}
 \end{figure}
-By induction on the iterations one can prove that the cost of the chosen
-element in step (ii) always decreases. This is a key lemma to prove the
-correctness of the algorithm. Because, if we assume to have a beneficial
-alternative to the computed basis for one player there is an element with
-less cost. This alternative element is not part of the selected cut since
-it would be removed for all players and thus keep its marginal cost although
-only elements with higher costs are removed (by choice of the element in the
-cut). Furthermore, the alternative element cannot be available to the player
-for which the cut is selected since both elements open the
-\enquote{same dimensionality} in contradiction to choosing a cut. Thus, the
-alternative element has been removed before which implies less cost in a
-previous step to the iteration where the original element was chosen. This
-contradicts the monotonicity of costs of considered elements through the
-iterations. Thus
+By induction on the number of iterations we can prove that the cost of the
+chosen element in step (ii) always decreases. This is a key insight to prove
+the correctness of the algorithm. Because, if we assume to have a beneficial
+alternative to the computed basis for one player there must exist an element
+with less cost. This alternative element cannot be part of the selected cut
+since it would be removed for all players and thus keep its marginal cost
+although only elements with higher costs are removed (by choice of the element
+in the cut). Furthermore, the alternative element cannot be available to the
+player for which the cut is selected since both elements open the
+\enquote{same dimension} in contradiction to the choice of a cut. Thus, the
+alternative element must already have been removed which implies less
+cost in a previous step to the iteration where the original element was chosen.
+This contradicts the monotonicity of costs of considered elements through the
+iterations. {Thus, we get the following theorem:
 \begin{theo}
   The presented algorithm computes a PNE.
 \end{theo}
+}
 
 \section{Weighted Matroid Games}
-Starting from a congestion model where every player aims to buy a basis from
+Starting from a congestion model where every player aims to buy a basis of
 a certain matroid and every player puts an individual demand upon the resources
 she/he uses we derive a complete characterisation of PNEs as well as show that
-every socially optimal solution actually induces a PNE. Firstly, we give some
+every socially optimal solution induces a PNE. First of all, we give some
 auxiliary definitions (with a profile $B\in\mathcal{B}$, a resource $e\in E$):
 \begin{itemize}
   \item $N_{e}(B) = \set{i\in N\middle| e\in B_{i}}$ is the set of players
@@ -324,9 +334,9 @@ auxiliary definitions (with a profile $B\in\mathcal{B}$, a resource $e\in E$):
   \item $F$ is the set of resources that is obligatory for any player, i.e.
     every element of $F$ is present in \emph{all} bases of one (or more) player
   \item $\Delta_{i}\tupel{B;e\rightarrow f}$ is the marginal cost player $i$
-    has to pay for resource $f$ if he intends to use $f$ instead of $e$
-    (we define the minimum over all resources $e$ can be exchanged with as
-    $\Delta_{i}^{e}(B) = \min_{f\in\ex_{i}(e)}\Delta_{i}(B;e\rightarrow f)$)
+    has to pay for resource $f$ if he intends to use $f$ instead of $e$.
+    We define the minimum over all resources $e$ can be exchanged with as
+    $\Delta_{i}^{e}(B) = \min_{f\in\ex_{i}(e)}\Delta_{i}(B;e\rightarrow f)$
 \end{itemize}
 With these definitions we can formulate the following characterisation of
 PNEs which holds for all non-negative and non-decreasing cost functions.
@@ -339,13 +349,13 @@ PNEs which holds for all non-negative and non-decreasing cost functions.
     E\setminus F
   \end{equation*}
 \end{theo}
-The \enquote{only if} direction is easily given by the fact that the cost
-of a resource is the sum of the contributions of every player for this resource
-and no player has an incentive to uniliterally change to another basis of
-her/his matroid. While, for the \enquote{if} direction, we let for elements in
-$F$ one player for whom this resource is obligatory pay for this resource
+The \enquote{only if} direction is easily shown by the fact that the cost
+of a resource equals the sum of the contributions of every player for this
+resource and no player has an incentive to unilaterally change to another basis
+of her/his matroid. While, for the \enquote{if} direction, we let for elements
+in $F$ one player for whom this resource is obligatory pay for this resource
 (since she/he needs this resource to be available she/he can not choose to
-uniliterally change her/his payment). For all other elements we can define the
+unilaterally change her/his payment). For all other elements we can define the
 payments as follows:
 \begin{equation*}
   p_{i}^{e} = \begin{cases}
@@ -358,17 +368,17 @@ payments as follows:
 which yields $p_{i}^{e}\leq \Delta_{i}^{e}$ for all $e\in E\setminus F$
 implying a PNE.
 
-Using this one can derive a series of inequalities to show that every socially
-optimal solution satisfies the given characterisation and hence
+Using this we can derive a series of inequalities to show that every socially
+optimal solution satisfies the given characterisation and hence:
 \begin{theo}
   Every weighted matroid resource buying game with marginally non-increasing
-  cost functions posses a PNE.
+  cost functions possesses a PNE.
 \end{theo}
 For completeness we state - without going into details - an analogous result
 for non-decreasing cost functions. Again starting from a socially optimal
-configuration one can derive a pricing vector (called marginal cost pricing)
-which forms with the given configuration a PNE. Especially this result is
-also viable for non-matroid strategy spaces, yielding:
+configuration we can derive a pricing vector (called marginal cost pricing)
+which forms a PNE with the given configuration. Noteably, this result is
+also true for non-matroid strategy spaces, yielding:
 \begin{theo}
   Let $G$ be a weighted resource buying game with non-decreasing marginal costs
   and let $S^{\ast}$ be a socially optimal solution. Then, marginal cost
@@ -376,23 +386,23 @@ also viable for non-matroid strategy spaces, yielding:
 \end{theo}
 
 \section{Non-Matroid Strategy Spaces}
-Finally, we consider in this section non-matroid strategy spaces. Specifically,
-we present a construction which illustrates how to obtain a weighted two player
+Finally, we consider non-matroid strategy spaces. Specifically,
+we present a construction to obtain a weighted two player
 resource buying game with marginally non-increasing cost functions which does
 not posses a PNE starting from a non-matroid anti-chain $S$. This implies that
 matroids are exactly the structures to consider using marginally non-increasing
 cost functions since other structures cannot guarantee the existence of PNEs.
 Thus, we prove the following theorem:
 \begin{theo}
-  For every non-matroid anti-chain $\mathcal{S}$ on a set of resources $E$,
-  there exists a weighted two-player resource buying game
-  $G = \tupel{\tilde{E},
+  For every non-matroid anti-chain $\mathcal{S}$ (i.e. a family of sets which
+  are not ordered by $\subseteq$) on a set of resources $E$, there exists a
+  weighted two-player resource buying game $G = \tupel{\tilde{E},
     (\mathcal{S}_{1}\times \mathcal{S}_{2})\times\mathcal{P},\pi}$
   having marginally non-increasing cost functions, whose strategy spaces
   $\mathcal{S}_{1}$ and $\mathcal{S}_{2}$ are both isomorphic to $\mathcal{S}$,
-  so that $G$ does not posses a PNE.
+  so that $G$ does not possess a PNE.
 \end{theo}
-As said before we start with an anti-chain $\mathcal{S}\subseteq 2^{E}$ which
+We start with an anti-chain $\mathcal{S}\subseteq 2^{E}$ which
 specifically does \emph{not} satisfy the matroid properties. Hence
 $\mathcal{S}$ contains two sets $X, Y$ s.t. there is one element in $X$ for
 which we cannot find a single element in $Y$ to obtain an element from
@@ -405,7 +415,7 @@ by the following lemma:
   $Z\in\mathcal{S}$ with $Z\subseteq(X\cup Y)\setminus\set{a}$ contains both,
   $b$ and $c$.
 \end{lemma}
-Especially we can guarantee that there are two elements in $\mathcal{S}$ s.t.
+Especially, we can guarantee that there are two elements in $\mathcal{S}$ s.t.
 one contains $a$ (but not $b$ and $c$) and the other $b$ and $c$ (but not $a$).
 In the following we construct a game which does not possess a PNE. The
 constructed game is illustrated in Figure \ref{fig:game} for better
@@ -417,18 +427,19 @@ understanding.
 \end{figure}
 We consider two isomorphic copies of $\mathcal{S}$:
 $\mathcal{S}_{1},\mathcal{S}_{2}$ and by previous lemma there are
-$X_{i}, Y_{i}\in\mathcal{S}_{i}$ for $i = 1,2$ as described above. We interleaf
-the ground-sets of $\mathcal{S}_{1}$ and $\mathcal{S}_{2}$ by precisely three
-elements $x,y,z$ which we identify in both copies differently. Namely, we set
-$x = a_{1} = b_{2}$, $y = b_{1} = a_{2}$, and $z = c_{1} = c_{2}$. The set of
-resources for $G$ is now the union of both ground-sets w.r.t. the intersection
-which is $\set{x,y,z}$. Furthermore we fix the cost functions of all elements
-in $\tilde{E}\setminus(X_{1}\cup X_{2}\cup Y_{1}\cup Y_{2})$ to a high constant
-$M$ which ensures that both players only play within $X_{i}, Y_{i}$ (for
-$i = 1,2$ respectively). In this \enquote{sub-arena} we set the cost functions
-of all elements other than $\set{x,y,z}$ to $0$ regardless of the demand. And
-concludingly we set $c_{x}(t) = t$, $c_{y}(t) = 5\frac{1}{2}$, and
-$c_{z}(t) = 4$ and an individual demand of the players of $d_{1} = 5$ and
+$X_{i}, Y_{i}\in\mathcal{S}_{i}$ for $i = 1,2$ as described above. We
+interleave the ground-sets of $\mathcal{S}_{1}$ and $\mathcal{S}_{2}$ by
+precisely three elements $x,y,z$ which we identify differently in both copies.
+Namely, we set $x = a_{1} = b_{2}$, $y = b_{1} = a_{2}$, and
+$z = c_{1} = c_{2}$. The set of resources for $G$ is now the union of both
+ground-sets w.r.t. their intersection which is $\set{x,y,z}$. Furthermore, we
+fix the cost functions of all elements in
+$\tilde{E}\setminus(X_{1}\cup X_{2}\cup Y_{1}\cup Y_{2})$ to a high constant
+$M$ which ensures that both players only play within $X_{i},
+Y_{i}$ (for $i = 1,2$ respectively). In this \enquote{sub-arena} we set the
+cost functions of all elements other than $\set{x,y,z}$ to $0$ regardless of
+the demand. And concludingly, we set $c_{x}(t) = t$, $c_{y}(t) = 5\frac{1}{2}$,
+and $c_{z}(t) = 4$ and an individual demand of the players of $d_{1} = 5$ and
 $d_{2} = 4$. Thus, each player either contributes to pay for her/his $a$ or
 to $b$ and $c$. Assuming there is a PNE
 $\tupel{Z^{\ast} = \tupel{Z_{1}^{\ast}, Z_{2}^{\ast}},
@@ -438,24 +449,24 @@ of $\set{x,y,z}$ that
   x\notin Z_{1}^{\ast}\Rightarrow \set{y,z}\subseteq Z_{1}^{\ast} \text{ and }
   y\notin Z_{2}^{\ast}\Rightarrow \set{x,z}\subseteq Z_{2}^{\ast}
 \end{equation*}
-By examining the restricted environment of the cost inducing elements ($x,y,z$)
-and the conclusion that one player either only contributes to $x$ or $y$ and
-$z$ and the other only to $y$ or $x$ and $z$ one can conclude that neither
-$x\in Z_{1}^{\ast}$ nor $x\notin Z_{1}^{\ast}$ which yields a contradiction to
-the existence of a PNE and thus concludes the argument on the section-leading
-theorem.
+By examining the restricted environment of the cost inducing elements
+$\set{x,y,z}$ and the conclusion that one player either only contributes to $x$
+or $y$ and $z$ and the other only to $y$ or $x$ and $z$ one can conclude that
+neither $x\in Z_{1}^{\ast}$ nor $x\notin Z_{1}^{\ast}$ which yields a
+contradiction to the existence of a PNE and concludes the argument on the
+theorem proposed at the beginning of the section.
 
 \section{Conclusion}
 Among other restrictions we studied unweighted congestion games with marginally
 non-increasing cost functions. For these games matroids are precisely the
 configuration spaces to guarantee PNEs as well as allow for efficient
 computation of one PNE. For weighted matroid games with marginally
-non-increasing cost functions the existence of PNEs can be assured. Also for
-weighted congestion games with marginally non-decreasing cost functions PNEs
-are given. Hereby the structure of strategy spaces is unrestricted.
+non-increasing cost functions the existence of PNEs can be assured as well as
+for weighted congestion games with marginally non-decreasing cost functions.
+Hereby the structure of strategy spaces is unrestricted.
 Concludingly, marginally non-increasing cost functions demand matroid strategy
-spaces as combinatorial structure which capture e.g. spanning trees, linear
-independence, \dots. On the other hand marginally non-decreasing cost functions
+spaces as combinatorial structures which capture e.g. spanning trees, linear
+independence, etc. On the other hand, marginally non-decreasing cost functions
 might induce a certain stability in a market by ensuring the existence of PNEs.
 
 \printbibliography
